@@ -106,7 +106,7 @@ img{display:block;max-width:100%}
 .service_row .text-mono:last-child{text-align:right}
 
 /* Méthode */
-.process_grid{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:10px;overflow:hidden;background:rgba(11,11,12,.7);backdrop-filter:blur(14px)}
+.process_grid{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#0e0e10}
 .process_item{padding:2rem 1.6rem 2.4rem;border-right:1px solid var(--line);min-height:280px;display:flex;flex-direction:column;justify-content:space-between;transition:background .3s}
 .process_item:hover{background:rgba(157,132,255,.07)}
 .process_item:last-child{border-right:0}
@@ -169,13 +169,6 @@ img{display:block;max-width:100%}
 .process_item .text-mono{font-size:.9rem}
 .process_item h3{font-size:clamp(1.6rem,2.4vw,2.2rem);letter-spacing:-.03em;margin:0}
 .contact_title{margin-bottom:2.6rem}
-/* Galerie horizontale des projets (ordi) */
-@media (min-width:992px){
-  #realisations{overflow:hidden;padding:6rem 0 4rem}
-  .work_grid{display:flex;gap:2rem;width:max-content}
-  .work_item,.work_item.is-wide{flex:none;width:83.2vh}
-  .work_item.is-wide .work_image{aspect-ratio:16/10}
-}
 @media (max-width:991px){
   .section_header{grid-template-columns:1fr}
   .service_row{grid-template-columns:1fr}
@@ -185,7 +178,7 @@ img{display:block;max-width:100%}
 
 /* ---- Services : cartes avec mini-maquette illustrée ---- */
 .services_grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.25rem}
-.service_card{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:rgba(15,15,18,.88);backdrop-filter:blur(16px);transition:border-color .35s,transform .35s}
+.service_card{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#101013;transition:border-color .35s,transform .35s}
 .service_card:hover{border-color:#51487a}
 .service_visual{aspect-ratio:16/9;overflow:hidden;border-bottom:1px solid var(--line);background:radial-gradient(ellipse at 50% 0,#1d1933,transparent 70%)}
 .service_info{display:grid;grid-template-columns:1fr auto;align-items:end;gap:.5rem 1rem;padding:1.4rem 1.6rem 1.6rem}
@@ -207,6 +200,8 @@ img{display:block;max-width:100%}
 /* ---- Vidéo du tunnel pilotée par le scroll (suite d'images) ---- */
 #seq{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
 .has-seq .heading-style-h1{text-shadow:0 4px 60px rgba(0,0,0,.7)}
+/* ---- Passe UX : hiérarchie et lecture ---- */
+.section_hero .hero_sub{margin:1.6rem auto 0;max-width:520px;color:#d4d4da;font-size:1.15rem;text-shadow:0 2px 24px rgba(0,0,0,.8)}
 </style>
 </head>
 <body>
@@ -224,7 +219,7 @@ img{display:block;max-width:100%}
     <div class="padding-global"><div class="container-large nav_inner">
       <a href="#" class="nav_logo">Charika Web</a>
       <nav class="nav_links" aria-label="Navigation principale">
-        <a href="#realisations">Réalisations</a><a href="#services">Services</a><a href="#methode">Méthode</a>
+        <a href="#services">Services</a><a href="#realisations">Réalisations</a><a href="#methode">Méthode</a>
       </nav>
       <a href="#contact" class="nav_cta">Me contacter</a>
     </div></div>
@@ -238,6 +233,7 @@ img{display:block;max-width:100%}
           <span class="line"><span class="line_inner">Des sites</span></span>
           <span class="line"><span class="line_inner">qui <em>vendent.</em></span></span>
         </h1>
+        <p class="hero_sub hero_fade">Landing pages, sites vitrines et boutiques Shopify pour artisans, indépendants et PME.</p>
       </div></div>
       <div class="hero_bottom">
         <span class="text-mono hero_fade">Studio web — Paris</span>
@@ -246,11 +242,39 @@ img{display:block;max-width:100%}
       </div>
     </section>
 
+    <!-- SERVICES -->
+    <section class="section" id="services">
+      <div class="padding-global"><div class="container-large">
+        <div class="section_header">
+          <span class="text-mono fade-up">( 01 ) Services</span>
+          <h2 class="heading-style-h2" data-lines><span class="line"><span class="line_inner">Ce que je fais</span></span></h2>
+        </div>
+        <div class="services_grid">
+          <article class="service_card fade-up">
+            <div class="service_visual"><img src="images/service-landing.jpg" alt="Landing page" loading="lazy"></div>
+            <div class="service_info"><span class="text-mono">A</span><h3>Landing page</h3><span class="text-mono">Webflow · Framer</span></div>
+          </article>
+          <article class="service_card fade-up">
+            <div class="service_visual"><img src="images/service-vitrine.jpg" alt="Site vitrine" loading="lazy"></div>
+            <div class="service_info"><span class="text-mono">B</span><h3>Site vitrine</h3><span class="text-mono">Webflow · Framer</span></div>
+          </article>
+          <article class="service_card fade-up">
+            <div class="service_visual"><img src="images/service-boutique.jpg" alt="Boutique en ligne" loading="lazy"></div>
+            <div class="service_info"><span class="text-mono">C</span><h3>Boutique en ligne</h3><span class="text-mono">Shopify</span></div>
+          </article>
+          <article class="service_card fade-up">
+            <div class="service_visual"><img src="images/service-refonte.jpg" alt="Refonte" loading="lazy"></div>
+            <div class="service_info"><span class="text-mono">D</span><h3>Refonte</h3><span class="text-mono">Tous outils</span></div>
+          </article>
+        </div>
+      </div></div>
+    </section>
+
     <!-- RÉALISATIONS -->
     <section class="section" id="realisations">
       <div class="padding-global"><div class="container-large">
         <div class="section_header">
-          <span class="text-mono fade-up">( 01 ) Réalisations</span>
+          <span class="text-mono fade-up">( 02 ) Réalisations</span>
           <h2 class="heading-style-h2" data-lines><span class="line"><span class="line_inner">Projets récents</span></span></h2>
         </div>
         <div class="work_grid">
@@ -276,34 +300,6 @@ img{display:block;max-width:100%}
             </div></div>
             <div class="work_meta"><h3>CCDLS</h3><span class="text-mono">Site vitrine</span></div>
           </a>
-        </div>
-      </div></div>
-    </section>
-
-    <!-- SERVICES -->
-    <section class="section" id="services">
-      <div class="padding-global"><div class="container-large">
-        <div class="section_header">
-          <span class="text-mono fade-up">( 02 ) Services</span>
-          <h2 class="heading-style-h2" data-lines><span class="line"><span class="line_inner">Ce que je fais</span></span></h2>
-        </div>
-        <div class="services_grid">
-          <article class="service_card fade-up">
-            <div class="service_visual"><img src="images/service-landing.jpg" alt="Landing page" loading="lazy"></div>
-            <div class="service_info"><span class="text-mono">A</span><h3>Landing page</h3><span class="text-mono">Webflow · Framer</span></div>
-          </article>
-          <article class="service_card fade-up">
-            <div class="service_visual"><img src="images/service-vitrine.jpg" alt="Site vitrine" loading="lazy"></div>
-            <div class="service_info"><span class="text-mono">B</span><h3>Site vitrine</h3><span class="text-mono">Webflow · Framer</span></div>
-          </article>
-          <article class="service_card fade-up">
-            <div class="service_visual"><img src="images/service-boutique.jpg" alt="Boutique en ligne" loading="lazy"></div>
-            <div class="service_info"><span class="text-mono">C</span><h3>Boutique en ligne</h3><span class="text-mono">Shopify</span></div>
-          </article>
-          <article class="service_card fade-up">
-            <div class="service_visual"><img src="images/service-refonte.jpg" alt="Refonte" loading="lazy"></div>
-            <div class="service_info"><span class="text-mono">D</span><h3>Refonte</h3><span class="text-mono">Tous outils</span></div>
-          </article>
         </div>
       </div></div>
     </section>
@@ -381,7 +377,7 @@ img{display:block;max-width:100%}
   var first = new Image();
   first.onload = function(){
     document.documentElement.classList.add('has-seq'); imgs[0] = first;
-    for(var i=1;i<N;i++){ var im = new Image(); im.src = src(i); imgs[i] = im; }
+    for(var i=1;i<N;i++){ var im = new Image(); im.src = src(i); imgs[i] = im; if(im.decode) im.decode().catch(function(){}); }
     size(); addEventListener('resize', size); loop();
   };
   // Images absentes : on retire le tunnel et on annule le figeage du haut de page
@@ -409,7 +405,7 @@ img{display:block;max-width:100%}
   // Scroll fluide
   var lenis = null;
   if(window.Lenis){
-    lenis = new Lenis();
+    lenis = new Lenis({lerp:.12});
     lenis.on('scroll', ScrollTrigger.update);
     gsap.ticker.add(function(t){ lenis.raf(t*1000); });
     gsap.ticker.lagSmoothing(0);
@@ -436,31 +432,24 @@ img{display:block;max-width:100%}
 
   // Haut de page : la page se fige pendant la traversée du tunnel, le titre s'efface
   if(document.getElementById('seq')){
-    window.__heroPin = 2;
-    var fade = gsap.to('.section_hero > *', {opacity:0, y:-50, ease:'none', scrollTrigger:{trigger:'.section_hero', start:'top top', end:'+=90%', scrub:true}});
-    window.__heroST = [ScrollTrigger.create({trigger:'.section_hero', start:'top top', end:'+=200%', pin:true, refreshPriority:2}), fade.scrollTrigger];
+    window.__heroPin = 1.3;
+    var fade = gsap.to('.section_hero > *', {opacity:0, y:-50, ease:'none', scrollTrigger:{start:function(){ return innerHeight*.55; }, end:function(){ return innerHeight*1.2; }, scrub:true}});
+    window.__heroST = [ScrollTrigger.create({trigger:'.section_hero', start:'top top', end:'+=130%', pin:true, refreshPriority:2}), fade.scrollTrigger];
   }
   // Titres de section
   document.querySelectorAll('[data-lines]').forEach(function(el){
-    gsap.from(el.querySelectorAll('.line_inner'), {yPercent:110, duration:1.1, ease:'power4.out', stagger:.09, scrollTrigger:{trigger:el, start:'top 88%'}});
+    gsap.from(el.querySelectorAll('.line_inner'), {yPercent:110, duration:.8, ease:'power4.out', stagger:.07, scrollTrigger:{trigger:el, start:'top 93%'}});
   });
   // Apparitions simples
   document.querySelectorAll('.fade-up').forEach(function(el){
-    gsap.from(el, {opacity:0, y:30, duration:.9, ease:'power3.out', scrollTrigger:{trigger:el, start:'top 90%'}});
+    gsap.from(el, {opacity:0, y:20, duration:.6, ease:'power3.out', scrollTrigger:{trigger:el, start:'top 95%'}});
   });
   // Projets : l'image se dévoile de bas en haut, puis léger parallaxe
   document.querySelectorAll('.work_item').forEach(function(item){
     var img = item.querySelector('.work_image'), inner = item.querySelector('.work_image-inner');
-    gsap.fromTo(img, {clipPath:'inset(100% 0% 0% 0%)'}, {clipPath:'inset(0% 0% 0% 0%)', duration:1.3, ease:'power4.inOut', scrollTrigger:{trigger:item, start:'top 85%'}});
+    gsap.fromTo(img, {clipPath:'inset(100% 0% 0% 0%)'}, {clipPath:'inset(0% 0% 0% 0%)', duration:.9, ease:'power3.inOut', scrollTrigger:{trigger:item, start:'top 90%'}});
     gsap.fromTo(inner, {yPercent:-5}, {yPercent:5, ease:'none', scrollTrigger:{trigger:item, start:'top bottom', end:'bottom top', scrub:true}});
-    gsap.from(item.querySelector('.work_meta'), {opacity:0, y:20, duration:.8, delay:.4, scrollTrigger:{trigger:item, start:'top 85%'}});
-  });
-  // Projets : la section se fige et la galerie défile à l'horizontale (ordi)
-  gsap.matchMedia().add('(min-width: 992px)', function(){
-    var track = document.querySelector('.work_grid');
-    var dist = function(){ return track.scrollWidth - track.parentElement.clientWidth; };
-    gsap.to(track, {x:function(){ return -dist(); }, ease:'none',
-      scrollTrigger:{trigger:'#realisations', pin:true, scrub:1, start:'top top', end:function(){ return '+=' + dist(); }, invalidateOnRefresh:true, refreshPriority:1}});
+    gsap.from(item.querySelector('.work_meta'), {opacity:0, y:20, duration:.6, delay:.2, scrollTrigger:{trigger:item, start:'top 90%'}});
   });
   // Grand texte piloté par le scroll
   gsap.fromTo('.bigtext_track', {xPercent:5}, {xPercent:-35, ease:'none', scrollTrigger:{trigger:'.section_bigtext', start:'top bottom', end:'bottom top', scrub:true}});
@@ -489,15 +478,11 @@ img{display:block;max-width:100%}
 <!-- Scène 3D : objet chrome irisé, reflets d'environnement, bloom, pilotée par le scroll -->
 <script type="module">
 import * as THREE from 'three';
-import {EffectComposer} from 'three/addons/postprocessing/EffectComposer.js';
-import {RenderPass} from 'three/addons/postprocessing/RenderPass.js';
-import {UnrealBloomPass} from 'three/addons/postprocessing/UnrealBloomPass.js';
-import {OutputPass} from 'three/addons/postprocessing/OutputPass.js';
 import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
 
 const canvas = document.getElementById('webgl');
 const renderer = new THREE.WebGLRenderer({canvas, antialias:true});
-renderer.setPixelRatio(Math.min(devicePixelRatio, 1.75));
+renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
 
 const scene = new THREE.Scene();
@@ -544,17 +529,12 @@ scene.add(dust);
 const l1 = new THREE.PointLight(0x9d84ff, 60); l1.position.set(3, 2, 4); scene.add(l1);
 const l2 = new THREE.PointLight(0xffb38a, 25); l2.position.set(-4, -2, 3); scene.add(l2);
 
-const composer = new EffectComposer(renderer);
-composer.addPass(new RenderPass(scene, camera));
-const bloom = new UnrealBloomPass(new THREE.Vector2(1,1), .35, .7, .82);
-composer.addPass(bloom);
-composer.addPass(new OutputPass());
 
 let mobile = false;
 function resize(){
   const w = innerWidth, h = innerHeight;
   mobile = w < 992;
-  renderer.setSize(w, h, false); composer.setSize(w, h);
+  renderer.setSize(w, h, false);
   camera.aspect = w/h; camera.updateProjectionMatrix();
 }
 addEventListener('resize', resize); resize();
@@ -574,20 +554,22 @@ const clock = new THREE.Clock();
   const p = scrollY/max;
 
   // Trois états : hero (net, à droite) → milieu (grand, discret, en fond) → contact (de retour)
-  const xHero = 0, xMid = Math.sin(p*9)*(mobile ? .8 : 3.2), xEnd = mobile ? 0 : 2.5;
+  const xHero = 0, xMid = mobile ? 0 : 3.4, xEnd = mobile ? 0 : 2.5;
   const yHero = .15, yEnd = mobile ? 1.5 : 0;
   const sHero = mobile ? .62 : 1.25, sMid = mobile ? .9 : 1.3, sEnd = mobile ? .5 : 1.05;
   rig.position.x = L(L(xHero, xMid, a), xEnd, b);
   rig.position.y = L(L(yHero, -.4, a), yEnd, b);
   rig.scale.setScalar(L(L(sHero, sMid, a), sEnd, b));
-  canvas.style.opacity = L(L(1, mobile ? .28 : .42, a), mobile ? .55 : 1, b);
+  canvas.style.opacity = L(L(1, mobile ? .12 : .3, a), mobile ? .55 : 1, b);
 
   sm.x += (mouse.x-sm.x)*.04; sm.y += (mouse.y-sm.y)*.04;
-  knot.rotation.set(t*.12 + sm.y*.35 + p*5, t*.18 + sm.x*.5 + p*7, 0);
+  knot.rotation.set(t*.12 + sm.y*.35 + p*2, t*.18 + sm.x*.5 + p*3, 0);
   sats.rotation.set(sm.y*.2, -t*.07 + sm.x*.3 + p*3, t*.03);
   l1.position.x = 3 + sm.x*2; l1.position.y = 2 - sm.y*2;
   uTime.value = t; dust.position.y = p*12; dust.rotation.y = sm.x*.05;
-  composer.render();
+  // Pas de rendu 3D tant que le tunnel recouvre l'écran
+  const seq = document.getElementById('seq');
+  if(!(seq && parseFloat(seq.style.opacity || 1) > .98)) renderer.render(scene, camera);
 })();
 </script>
 </body>
