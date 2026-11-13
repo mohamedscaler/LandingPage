@@ -43,6 +43,8 @@ One-page pour démarcher des clients (artisans, indépendants, PME). Objectif un
 - [x] Section Réalisations retirée (décision : pas de projets montrés)
 - [ ] Logo dans la nav (4 pistes générées sur Higgsfield, choix en attente)
 - [ ] Avis clients si disponibles
+- [ ] Image de partage dédiée (`og:image` pointe pour l'instant sur `images/service-landing.jpg`) et favicon à remplacer par le logo
+- [x] Passe impeccable : meta SEO/Open Graph + JSON-LD, focus clavier, lien d'évitement, labels ≥ 12 px, ombre neutre sur le bouton principal
 
 ## Règles de travail
 

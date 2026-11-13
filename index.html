@@ -5,6 +5,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Charika Web — Studio web</title>
 <meta name="description" content="Charika Web conçoit des landing pages, sites vitrines et boutiques Shopify pour artisans, indépendants et PME.">
+<meta name="theme-color" content="#0b0b0c">
+<link rel="canonical" href="https://mohamedscaler.github.io/LandingPage/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230b0b0c'/%3E%3Ctext x='32' y='44' font-family='system-ui,sans-serif' font-size='36' font-weight='700' text-anchor='middle' fill='%239d84ff'%3EC%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:site_name" content="Charika Web">
+<meta property="og:title" content="Charika Web — Des sites qui vendent">
+<meta property="og:description" content="Landing pages, sites vitrines et boutiques Shopify pour artisans, indépendants et PME. Maquette offerte avant de t'engager.">
+<meta property="og:url" content="https://mohamedscaler.github.io/LandingPage/">
+<meta property="og:image" content="https://mohamedscaler.github.io/LandingPage/images/service-landing.jpg">
+<meta property="og:image:width" content="1344">
+<meta property="og:image:height" content="752">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","name":"Charika Web","url":"https://mohamedscaler.github.io/LandingPage/","description":"Création de landing pages, sites vitrines et boutiques Shopify pour artisans, indépendants et PME.","areaServed":"FR","address":{"@type":"PostalAddress","addressLocality":"Paris","addressCountry":"FR"},"sameAs":["https://instagram.com/charika.web"]}</script>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -304,9 +319,20 @@ img{display:block;max-width:100%}
 :root{--ease:cubic-bezier(0.22,1,0.36,1)}
 /* Bouton « Demander ma maquette » toujours visible dans la pilule du haut */
 @media (max-width:420px){.nav_inner{gap:.7rem;padding-left:1rem}.nav_logo{font-size:.95rem}.nav_cta{padding:0 .9rem;font-size:.86rem}}
+/* ---- Finitions : accessibilité, surfaces navigateur, ombres neutres ---- */
+::selection{background:rgba(157,132,255,.35);color:#fff}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:100px}
+.service_card:focus-visible,.process_item:focus-visible{border-radius:2rem}
+.skip-link{position:fixed;top:.75rem;left:.75rem;z-index:200;padding:.7rem 1.1rem;border-radius:100px;background:#fff;color:#0b0b0c;font-weight:500;transform:translateY(-200%);transition:transform .3s}
+.skip-link:focus-visible{transform:none}
+.button.is-primary{box-shadow:0 12px 32px -12px rgba(0,0,0,.7),inset 0 1px 0 rgba(255,255,255,.5)}
+.section_header .text-mono{font-size:.75rem;letter-spacing:.16em}
+.text-mono{font-size:max(.78rem,12px)}
+html{scrollbar-color:#2e2e33 var(--bg)}
 </style>
 </head>
 <body>
+  <a href="#services" class="skip-link">Aller au contenu</a>
 <div class="preloader" id="preloader" aria-hidden="true">
   <span class="text-mono">Charika Web</span>
   <span class="preloader_count" id="preCount">0</span>
@@ -327,7 +353,7 @@ img{display:block;max-width:100%}
     </div></div>
   </header>
 
-  <main class="main-wrapper">
+  <main class="main-wrapper" id="contenu">
     <!-- HERO -->
     <section class="section_hero">
       <div class="padding-global"><div class="container-large">
@@ -353,22 +379,22 @@ img{display:block;max-width:100%}
         </div>
         <div class="services_grid">
           <div class="t-tilt fade-up"><article class="service_card t-tilt-card">
-            <div class="service_visual"><img src="images/service-landing.jpg" alt="Landing page" loading="lazy"></div>
+            <div class="service_visual"><img src="images/service-landing.jpg" alt="Landing page" loading="lazy" decoding="async" width="1344" height="752"></div>
             <div class="service_info"><span class="text-mono">A</span><h3>Landing page</h3><span class="text-mono">Webflow · Framer</span></div>
           <div class="t-tilt-glare"></div>
           </article></div>
           <div class="t-tilt fade-up"><article class="service_card t-tilt-card">
-            <div class="service_visual"><img src="images/service-vitrine.jpg" alt="Site vitrine" loading="lazy"></div>
+            <div class="service_visual"><img src="images/service-vitrine.jpg" alt="Site vitrine" loading="lazy" decoding="async" width="1344" height="752"></div>
             <div class="service_info"><span class="text-mono">B</span><h3>Site vitrine</h3><span class="text-mono">Webflow · Framer</span></div>
           <div class="t-tilt-glare"></div>
           </article></div>
           <div class="t-tilt fade-up"><article class="service_card t-tilt-card">
-            <div class="service_visual"><img src="images/service-boutique.jpg" alt="Boutique en ligne" loading="lazy"></div>
+            <div class="service_visual"><img src="images/service-boutique.jpg" alt="Boutique en ligne" loading="lazy" decoding="async" width="1344" height="752"></div>
             <div class="service_info"><span class="text-mono">C</span><h3>Boutique en ligne</h3><span class="text-mono">Shopify</span></div>
           <div class="t-tilt-glare"></div>
           </article></div>
           <div class="t-tilt fade-up"><article class="service_card t-tilt-card">
-            <div class="service_visual"><img src="images/service-refonte.jpg" alt="Refonte" loading="lazy"></div>
+            <div class="service_visual"><img src="images/service-refonte.jpg" alt="Refonte" loading="lazy" decoding="async" width="1344" height="752"></div>
             <div class="service_info"><span class="text-mono">D</span><h3>Refonte</h3><span class="text-mono">Tous outils</span></div>
           <div class="t-tilt-glare"></div>
           </article></div>
@@ -409,7 +435,7 @@ img{display:block;max-width:100%}
             <span class="line"><span class="line_inner text-color-muted">Parlons-en.</span></span>
           </h2>
           <div class="contact_buttons fade-up">
-            <a href="https://wa.me/message/AXORZOBAWECGN1" target="_blank" rel="noopener" class="button is-primary">WhatsApp — Demander ma maquette</a>
+            <a href="https://wa.me/message/AXORZOBAWECGN1" target="_blank" rel="noopener" class="button is-primary" aria-label="Demander ma maquette sur WhatsApp">Écrire sur WhatsApp</a>
             <a href="https://instagram.com/charika.web" target="_blank" rel="noopener" class="button is-secondary">Instagram — @charika.web</a>
           </div>
         </div>
