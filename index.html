@@ -459,8 +459,8 @@ html{scrollbar-color:#2e2e33 var(--bg)}
 <script>
 (function(){
   var N = 120, c = document.getElementById('seq'), ctx = c.getContext('2d'), imgs = [], cur = -1, f = 0;
-  // Grand écran : images HD (1920 px, WebP). Mobile : images légères (1280 px, JPG).
-  var HD = innerWidth * Math.min(devicePixelRatio, 2) > 1400;
+  // Écran large : images HD (1924 px, WebP). Écran vertical : recadrage central en pleine résolution (861×1076, JPG).
+  var HD = innerWidth * Math.min(devicePixelRatio, 2) > 1400 || innerWidth / innerHeight > .8;
   function src(i){ var n = String(i+1).padStart(3,'0'); return HD ? 'frames-hd/f_' + n + '.webp' : 'frames/f_' + n + '.jpg'; }
   function clamp(v){ return Math.max(0, Math.min(1, v)); }
   function size(){ var r = Math.min(devicePixelRatio, 2); c.width = innerWidth*r; c.height = innerHeight*r; cur = -1; }
@@ -468,6 +468,7 @@ html{scrollbar-color:#2e2e33 var(--bg)}
     var im = imgs[i]; if(!im || !im.complete || !im.naturalWidth) return;
     // Cadrage « cover » : l'image remplit l'écran sans se déformer
     var s = Math.max(c.width/im.naturalWidth, c.height/im.naturalHeight), w = im.naturalWidth*s, h = im.naturalHeight*s;
+    ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';
     ctx.drawImage(im, (c.width-w)/2, (c.height-h)/2, w, h); cur = i;
   }
   function loop(){
