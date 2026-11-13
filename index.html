@@ -282,6 +282,61 @@ img{display:block;max-width:100%}
 .process_icon{display:grid;place-items:center;width:52px;height:52px;border-radius:50%;color:#d9d2ff;border:1px solid rgba(255,255,255,.12);background:linear-gradient(180deg,rgba(255,255,255,.1),rgba(255,255,255,.03));box-shadow:inset 0 1px 0 rgba(255,255,255,.22)}
 .process_item h3{position:relative;z-index:1;margin-bottom:.45rem}
 .process_item p{position:relative;z-index:1;max-width:240px;font-size:.98rem;color:#b4b4bb}
+/* ================= transitions.dev — Card hover tilt (n°19) ================= */
+:root {
+  --tilt-perspective: 1000px;
+  --tilt-return: 1000ms;
+  --tilt-return-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --tilt-follow: 400ms;
+  --tilt-follow-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --tilt-glare-opacity: 0.32;
+  --tilt-glare-fade: 300ms;
+  --tilt-glare-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+.t-tilt { touch-action: none; }
+.t-tilt-card {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  transform:
+    perspective(var(--tilt-perspective))
+    rotateX(var(--tilt-rx, 0deg))
+    rotateY(var(--tilt-ry, 0deg));
+  transform-style: preserve-3d;
+  transition: transform var(--tilt-return) var(--tilt-return-ease);
+  will-change: transform;
+}
+.t-tilt-card.is-tilting {
+  transition: transform var(--tilt-follow) var(--tilt-follow-ease);
+}
+.t-tilt-glare {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  mix-blend-mode: screen;
+  background:
+    radial-gradient(circle 95px at var(--tilt-gx, 50%) var(--tilt-gy, 50%),
+      rgba(255,255,255,0.48), rgba(255,255,255,0.06) 52%, rgba(255,255,255,0) 84%),
+    radial-gradient(circle 200px at var(--tilt-gx, 50%) var(--tilt-gy, 50%),
+      rgba(255,255,255,0.22), rgba(255,255,255,0.04) 58%, rgba(255,255,255,0) 78%),
+    radial-gradient(circle 360px at var(--tilt-gx, 50%) var(--tilt-gy, 50%),
+      rgba(255,255,255,0.10), rgba(255,255,255,0) 88%);
+  transition: opacity var(--tilt-glare-fade) var(--tilt-glare-ease);
+}
+.t-tilt.is-hover .t-tilt-glare { opacity: var(--tilt-glare-opacity); }
+@media (prefers-reduced-motion: reduce) {
+  .t-tilt-card { transform: none !important; transition: none !important; }
+}
+/* Adaptation au site : on garde nos angles arrondis, l'inclinaison remplace le soulèvement au survol,
+   et le tactile continue de faire défiler la page (inclinaison à la souris uniquement). */
+.t-tilt{touch-action:auto}
+.service_card.t-tilt-card{border-radius:2rem;transition:transform var(--tilt-return) var(--tilt-return-ease),border-color .6s var(--ease)}
+.service_card.t-tilt-card.is-tilting{transition:transform var(--tilt-follow) var(--tilt-follow-ease),border-color .6s var(--ease)}
+.service_card.t-tilt-card:hover{transform:perspective(var(--tilt-perspective)) rotateX(var(--tilt-rx,0deg)) rotateY(var(--tilt-ry,0deg))}
+.t-tilt-glare{border-radius:inherit;z-index:2}
+/* Jeton de mouvement commun (transitions.dev : --ease-smooth-out) */
+:root{--ease:cubic-bezier(0.22,1,0.36,1)}
 </style>
 </head>
 <body>
@@ -330,22 +385,26 @@ img{display:block;max-width:100%}
           <h2 class="heading-style-h2" data-lines><span class="line"><span class="line_inner">Ce que je fais</span></span></h2>
         </div>
         <div class="services_grid">
-          <article class="service_card fade-up">
+          <div class="t-tilt fade-up"><article class="service_card t-tilt-card">
             <div class="service_visual"><img src="images/service-landing.jpg" alt="Landing page" loading="lazy"></div>
             <div class="service_info"><span class="text-mono">A</span><h3>Landing page</h3><span class="text-mono">Webflow · Framer</span></div>
-          </article>
-          <article class="service_card fade-up">
+          <div class="t-tilt-glare"></div>
+          </article></div>
+          <div class="t-tilt fade-up"><article class="service_card t-tilt-card">
             <div class="service_visual"><img src="images/service-vitrine.jpg" alt="Site vitrine" loading="lazy"></div>
             <div class="service_info"><span class="text-mono">B</span><h3>Site vitrine</h3><span class="text-mono">Webflow · Framer</span></div>
-          </article>
-          <article class="service_card fade-up">
+          <div class="t-tilt-glare"></div>
+          </article></div>
+          <div class="t-tilt fade-up"><article class="service_card t-tilt-card">
             <div class="service_visual"><img src="images/service-boutique.jpg" alt="Boutique en ligne" loading="lazy"></div>
             <div class="service_info"><span class="text-mono">C</span><h3>Boutique en ligne</h3><span class="text-mono">Shopify</span></div>
-          </article>
-          <article class="service_card fade-up">
+          <div class="t-tilt-glare"></div>
+          </article></div>
+          <div class="t-tilt fade-up"><article class="service_card t-tilt-card">
             <div class="service_visual"><img src="images/service-refonte.jpg" alt="Refonte" loading="lazy"></div>
             <div class="service_info"><span class="text-mono">D</span><h3>Refonte</h3><span class="text-mono">Tous outils</span></div>
-          </article>
+          <div class="t-tilt-glare"></div>
+          </article></div>
         </div>
       </div></div>
     </section>
@@ -549,6 +608,36 @@ img{display:block;max-width:100%}
 })();
 </script>
 
+<!-- transitions.dev — Card hover tilt : inclinaison 3D des cartes de services vers la souris -->
+<script>
+(function(){
+  var reduce = matchMedia("(prefers-reduced-motion: reduce)");
+  var MAX = 7; // inclinaison max en degrés (cartes larges : on reste discret)
+  document.querySelectorAll(".t-tilt").forEach(function(tilt){
+    var card = tilt.querySelector(".t-tilt-card");
+    function reset(){
+      tilt.classList.remove("is-hover");
+      card.classList.remove("is-tilting");
+      card.style.setProperty("--tilt-rx", "0deg");
+      card.style.setProperty("--tilt-ry", "0deg");
+    }
+    function track(e){
+      if (reduce.matches || e.pointerType !== "mouse") return;
+      var r = tilt.getBoundingClientRect();
+      var px = Math.min(1, Math.max(0, (e.clientX - r.left) / r.width));
+      var py = Math.min(1, Math.max(0, (e.clientY - r.top) / r.height));
+      tilt.classList.add("is-hover");
+      card.classList.add("is-tilting");
+      card.style.setProperty("--tilt-ry", ((px - 0.5) * MAX).toFixed(2) + "deg");
+      card.style.setProperty("--tilt-rx", ((0.5 - py) * MAX).toFixed(2) + "deg");
+      card.style.setProperty("--tilt-gx", (px * 100).toFixed(1) + "%");
+      card.style.setProperty("--tilt-gy", (py * 100).toFixed(1) + "%");
+    }
+    tilt.addEventListener("pointermove", track);
+    tilt.addEventListener("pointerleave", reset);
+  });
+})();
+</script>
 <script type="importmap">
 {"imports":{
   "three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
