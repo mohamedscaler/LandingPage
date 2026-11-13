@@ -7,7 +7,8 @@
 <meta name="description" content="Charika Web conçoit des landing pages, sites vitrines et boutiques Shopify pour artisans, indépendants et PME.">
 <meta name="theme-color" content="#0b0b0c">
 <link rel="canonical" href="https://mohamedscaler.github.io/LandingPage/">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230b0b0c'/%3E%3Ctext x='32' y='44' font-family='system-ui,sans-serif' font-size='36' font-weight='700' text-anchor='middle' fill='%239d84ff'%3EC%3C/text%3E%3C/svg%3E">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="fr_FR">
 <meta property="og:site_name" content="Charika Web">
@@ -18,7 +19,7 @@
 <meta property="og:image:width" content="1344">
 <meta property="og:image:height" content="752">
 <meta name="twitter:card" content="summary_large_image">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","name":"Charika Web","url":"https://mohamedscaler.github.io/LandingPage/","description":"Création de landing pages, sites vitrines et boutiques Shopify pour artisans, indépendants et PME.","areaServed":"FR","address":{"@type":"PostalAddress","addressLocality":"Paris","addressCountry":"FR"},"sameAs":["https://instagram.com/charika.web"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","name":"Charika Web","url":"https://mohamedscaler.github.io/LandingPage/","description":"Création de landing pages, sites vitrines et boutiques Shopify pour artisans, indépendants et PME.","areaServed":"FR","address":{"@type":"PostalAddress","addressLocality":"Paris","addressCountry":"FR"},"logo":"https://mohamedscaler.github.io/LandingPage/images/apple-touch-icon.png","sameAs":["https://instagram.com/charika.web"]}</script>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -329,6 +330,10 @@ img{display:block;max-width:100%}
 .section_header .text-mono{font-size:.75rem;letter-spacing:.16em}
 .text-mono{font-size:max(.78rem,12px)}
 html{scrollbar-color:#2e2e33 var(--bg)}
+/* ---- Logo dans la nav : fond noir fondu par mix-blend screen ---- */
+.nav_logo{display:inline-flex;align-items:center;gap:.55rem}
+.nav_logo-mark{width:30px;height:30px;border-radius:8px;mix-blend-mode:screen;flex:none}
+@media (max-width:420px){.nav_logo-mark{width:26px;height:26px}}
 </style>
 </head>
 <body>
@@ -345,7 +350,7 @@ html{scrollbar-color:#2e2e33 var(--bg)}
 <div class="page-wrapper">
   <header class="nav_component">
     <div class="padding-global"><div class="container-large nav_inner">
-      <a href="#" class="nav_logo">Charika Web</a>
+      <a href="#" class="nav_logo"><img src="images/logo.jpg" alt="" width="160" height="160" class="nav_logo-mark" decoding="async">Charika Web</a>
       <nav class="nav_links" aria-label="Navigation principale">
         <a href="#services">Services</a><a href="#methode">Méthode</a>
       </nav>

@@ -13,7 +13,7 @@ One-page pour démarcher des clients (artisans, indépendants, PME). Objectif un
 | `index.html` | Toute la page : HTML, CSS (`<style>`), JS (4 `<script>`) |
 | `frames/` | 120 JPG 1280 px du tunnel (mobile). Ne pas ouvrir |
 | `frames-hd/` | 120 WebP 1920 px du tunnel (ordi). Ne pas ouvrir |
-| `images/` | `service-{landing,vitrine,boutique,refonte}.jpg` |
+| `images/` | `service-{landing,vitrine,boutique,refonte}.jpg`, `logo.jpg`, `favicon.png`, `apple-touch-icon.png` |
 
 ## Structure de la page
 
@@ -41,9 +41,9 @@ One-page pour démarcher des clients (artisans, indépendants, PME). Objectif un
 
 - [x] Lien WhatsApp `https://wa.me/message/AXORZOBAWECGN1` sur tous les « Demander ma maquette » et au contact (mail retiré)
 - [x] Section Réalisations retirée (décision : pas de projets montrés)
-- [ ] Logo dans la nav (4 pistes générées sur Higgsfield, choix en attente)
+- [x] Logo dans la nav (« C » en verre, `images/logo.jpg`, fond noir fondu en `mix-blend-mode:screen`) + favicon et apple-touch-icon
 - [ ] Avis clients si disponibles
-- [ ] Image de partage dédiée (`og:image` pointe pour l'instant sur `images/service-landing.jpg`) et favicon à remplacer par le logo
+- [ ] Image de partage dédiée (`og:image` pointe pour l'instant sur `images/service-landing.jpg`)
 - [x] Passe impeccable : meta SEO/Open Graph + JSON-LD, focus clavier, lien d'évitement, labels ≥ 12 px, ombre neutre sur le bouton principal
 
 ## Règles de travail
