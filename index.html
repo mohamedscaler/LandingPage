@@ -360,7 +360,9 @@ img{display:block;max-width:100%}
 <script>
 (function(){
   var N = 120, c = document.getElementById('seq'), ctx = c.getContext('2d'), imgs = [], cur = -1, f = 0;
-  function src(i){ return 'frames/f_' + String(i+1).padStart(3,'0') + '.jpg'; }
+  // Grand écran : images HD (1920 px, WebP). Mobile : images légères (1280 px, JPG).
+  var HD = innerWidth * Math.min(devicePixelRatio, 2) > 1400;
+  function src(i){ var n = String(i+1).padStart(3,'0'); return HD ? 'frames-hd/f_' + n + '.webp' : 'frames/f_' + n + '.jpg'; }
   function clamp(v){ return Math.max(0, Math.min(1, v)); }
   function size(){ var r = Math.min(devicePixelRatio, 2); c.width = innerWidth*r; c.height = innerHeight*r; cur = -1; }
   function draw(i){
