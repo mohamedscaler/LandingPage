@@ -1,0 +1,592 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Charika Web — Studio web</title>
+<meta name="description" content="Charika Web conçoit des landing pages, sites vitrines et boutiques Shopify pour artisans, indépendants et PME.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0b0c;--surface:#121214;--text:#ededed;--muted:#a5a5ab;--line:#26262a;--accent:#9d84ff;
+  --font:'Inter Tight',system-ui,sans-serif;--mono:'JetBrains Mono',ui-monospace,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+
+/* Scène 3D fixe derrière la page + grain */
+#webgl{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.grain{position:fixed;inset:0;z-index:40;pointer-events:none;opacity:.07;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.page-wrapper{position:relative;z-index:1}
+
+/* Écran de chargement */
+.preloader{position:fixed;inset:0;z-index:100;background:var(--bg);display:flex;align-items:flex-end;justify-content:space-between;padding:2rem}
+.preloader_count{font-size:clamp(5rem,18vw,14rem);font-weight:500;line-height:.8;letter-spacing:-.06em}
+
+/* Curseur custom (souris uniquement) */
+.cursor{position:fixed;top:0;left:0;z-index:60;width:12px;height:12px;border-radius:50%;background:#fff;mix-blend-mode:difference;pointer-events:none;display:none;place-items:center;transition:width .3s,height .3s}
+.cursor span{font-family:var(--mono);font-size:.7rem;text-transform:uppercase;color:#000;opacity:0;transition:opacity .2s}
+.cursor.is-hover{width:44px;height:44px}
+.cursor.is-view{width:92px;height:92px}
+.cursor.is-view span{opacity:1}
+@media (pointer:fine){.cursor{display:grid}}
+
+/* Utilitaires Client-First */
+.padding-global{padding-left:2rem;padding-right:2rem}
+.container-large{max-width:1320px;margin:0 auto}
+.text-mono{font-family:var(--mono);font-size:.78rem;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.text-color-muted{color:var(--muted)}
+/* Lignes de titre : masque pour l'animation de révélation */
+.line{display:block;overflow:hidden;padding-bottom:.1em;margin-bottom:-.1em}
+.line_inner{display:block}
+
+/* Nav */
+.nav_component{position:fixed;top:0;left:0;right:0;z-index:10;mix-blend-mode:difference}
+.nav_inner{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:72px}
+.nav_logo{font-weight:600;font-size:1.05rem}
+.nav_links{display:flex;gap:2rem;font-size:.92rem}
+.nav_links a{opacity:.7;transition:opacity .2s}
+.nav_links a:hover{opacity:1}
+.nav_cta{justify-self:end;font-size:.92rem;border-bottom:1px solid currentColor;padding:.6rem 0}
+
+.button{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:52px;padding:0 1.6rem;border-radius:100px;font-size:.98rem;font-weight:500;transition:background .25s,color .25s,border-color .25s}
+.button.is-primary{background:var(--text);color:var(--bg)}
+.button.is-primary:hover{background:var(--accent);color:#0b0b0c}
+.button.is-secondary{border:1px solid #3a3a40;color:var(--text)}
+.button.is-secondary:hover{border-color:var(--text)}
+
+/* Hero */
+.section_hero{min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end}
+.hero_content{max-width:58%;padding:8rem 0 3.5rem}
+.heading-style-h1{font-size:clamp(3rem,7.4vw,7rem);font-weight:500;line-height:.96;letter-spacing:-.05em;margin:1.6rem 0 2rem}
+.heading-style-h1 em{font-style:normal;color:var(--accent)}
+.hero_sub{font-size:1.2rem;color:var(--muted);max-width:470px;margin-bottom:2.4rem}
+.hero_buttons{display:flex;gap:.8rem;flex-wrap:wrap}
+
+/* Bandeau infos */
+.info_grid{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.info_item{padding:1.5rem 1.6rem 1.5rem 0;border-right:1px solid var(--line)}
+.info_item + .info_item{padding-left:1.6rem}
+.info_item:last-child{border-right:0}
+.info_item p{margin-top:.35rem}
+
+/* Sections */
+.section{padding:8rem 0}
+.section_header{display:grid;grid-template-columns:200px 1fr 1fr;gap:2rem;align-items:end;margin-bottom:4.5rem}
+.heading-style-h2{font-size:clamp(2.2rem,5vw,4.2rem);font-weight:500;line-height:1;letter-spacing:-.04em}
+.section_header p{color:var(--muted);max-width:420px}
+
+/* Réalisations */
+.work_grid{display:grid;grid-template-columns:repeat(2,1fr);gap:4rem 2rem}
+.work_item{display:block}
+.work_item.is-wide{grid-column:span 2}
+.work_image{position:relative;aspect-ratio:16/10;border-radius:10px;overflow:hidden;background:var(--surface)}
+.work_item.is-wide .work_image{aspect-ratio:21/9}
+.work_image-inner{position:absolute;inset:-8% 0;transition:transform 1s cubic-bezier(.2,.8,.2,1)}
+.work_item:hover .work_image-inner{transform:scale(1.04)}
+.work_image img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top}
+.work_placeholder{position:absolute;inset:0;display:grid;place-items:center;font-size:clamp(1.8rem,4vw,3.4rem);font-weight:500;letter-spacing:-.04em;color:#45454b;background:radial-gradient(circle at 70% 20%,#1d1a2b,var(--surface) 60%)}
+.work_meta{display:grid;grid-template-columns:1fr auto;gap:.3rem 1rem;margin-top:1.2rem}
+.work_meta h3{font-size:1.4rem;font-weight:500;letter-spacing:-.02em}
+.work_meta .text-mono{align-self:center}
+.work_meta p{grid-column:1/-1;color:var(--muted);font-size:.95rem}
+
+/* Services */
+.services_list{border-top:1px solid var(--line)}
+.service_row{position:relative;display:grid;grid-template-columns:200px 1fr 1.2fr 220px;gap:2rem;align-items:baseline;padding:2.2rem 0;border-bottom:1px solid var(--line);transition:padding .4s cubic-bezier(.2,.8,.2,1)}
+.service_row::after{content:"";position:absolute;left:0;bottom:-1px;height:1px;width:0;background:var(--accent);transition:width .6s cubic-bezier(.2,.8,.2,1)}
+.service_row:hover{padding-left:1.2rem}
+.service_row:hover::after{width:100%}
+.service_row h3{font-size:clamp(1.6rem,2.6vw,2.3rem);font-weight:500;letter-spacing:-.03em}
+.service_row p{color:var(--muted)}
+.service_row .text-mono:last-child{text-align:right}
+
+/* Méthode */
+.process_grid{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:10px;overflow:hidden;background:rgba(11,11,12,.7);backdrop-filter:blur(14px)}
+.process_item{padding:2rem 1.6rem 2.4rem;border-right:1px solid var(--line);min-height:280px;display:flex;flex-direction:column;justify-content:space-between;transition:background .3s}
+.process_item:hover{background:rgba(157,132,255,.07)}
+.process_item:last-child{border-right:0}
+.process_item h3{font-size:1.3rem;font-weight:500;margin-bottom:.5rem}
+.process_item p{color:var(--muted);font-size:.95rem}
+
+/* Grand texte qui défile avec le scroll */
+.section_bigtext{overflow:hidden;padding:3rem 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.bigtext_track{display:flex;gap:4rem;width:max-content;font-size:clamp(4rem,13vw,12rem);font-weight:500;line-height:1;letter-spacing:-.05em;white-space:nowrap}
+.bigtext_track span:nth-child(even){color:transparent;-webkit-text-stroke:1px #55555c}
+
+/* Contact */
+.section_contact{min-height:100svh;display:flex;align-items:center;padding:8rem 0 5rem}
+.contact_inner{max-width:62%}
+.contact_title{font-size:clamp(3rem,9vw,8.5rem);font-weight:500;line-height:.94;letter-spacing:-.055em;margin:1.5rem 0 1.6rem}
+.contact_sub{color:var(--muted);font-size:1.2rem;max-width:440px;margin-bottom:2.4rem}
+.contact_buttons{display:flex;gap:.8rem;flex-wrap:wrap}
+
+.footer_component{padding:2rem 0;border-top:1px solid var(--line);background:var(--bg)}
+.footer_inner{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+
+@media (max-width:991px){
+  .padding-global{padding-left:1.25rem;padding-right:1.25rem}
+  .nav_inner{grid-template-columns:1fr auto}
+  .nav_links{display:none}
+  .hero_content,.contact_inner{max-width:100%}
+  .hero_content{padding-bottom:2.5rem}
+  .info_grid{grid-template-columns:1fr 1fr}
+  .info_item,.info_item + .info_item{padding:1.2rem 1rem 1.2rem 0}
+  .info_item:nth-child(2n){border-right:0;padding-left:1rem}
+  .info_item:nth-child(-n+2){border-bottom:1px solid var(--line)}
+  .section{padding:5rem 0}
+  .section_header{grid-template-columns:1fr;gap:1rem;margin-bottom:3rem}
+  .work_grid{grid-template-columns:1fr;gap:2.5rem}
+  .work_item.is-wide{grid-column:auto}
+  .work_item.is-wide .work_image{aspect-ratio:16/10}
+  .service_row{grid-template-columns:1fr;gap:.5rem}
+  .service_row .text-mono:last-child{text-align:left}
+  .process_grid{grid-template-columns:1fr 1fr}
+  .process_item{min-height:210px}
+  .process_item:nth-child(2){border-right:0}
+  .process_item:nth-child(-n+2){border-bottom:1px solid var(--line)}
+}
+@media (max-width:520px){
+  .process_grid{grid-template-columns:1fr}
+  .process_item{border-right:0;border-bottom:1px solid var(--line)}
+  .button{width:100%}
+}
+
+/* ---- V4 : plus visuel, moins de texte ---- */
+.section_hero{position:relative;align-items:center;justify-content:center;text-align:center}
+.section_hero .padding-global{width:100%}
+.heading-style-h1{font-size:clamp(3.4rem,13.5vw,14rem);line-height:.9;margin:0}
+.hero_bottom{position:absolute;left:2rem;right:2rem;bottom:2rem;display:flex;justify-content:space-between;align-items:center;gap:1rem}
+.section_header{grid-template-columns:200px 1fr;margin-bottom:3rem}
+.service_row{grid-template-columns:200px 1fr auto;align-items:center;padding:1.6rem 0}
+.service_row h3{font-size:clamp(2.4rem,6.5vw,6rem);line-height:1;letter-spacing:-.045em;color:#6b6b72;transition:color .3s}
+.service_row:hover h3{color:var(--text)}
+.process_item{min-height:240px}
+.process_item .text-mono{font-size:.9rem}
+.process_item h3{font-size:clamp(1.6rem,2.4vw,2.2rem);letter-spacing:-.03em;margin:0}
+.contact_title{margin-bottom:2.6rem}
+/* Galerie horizontale des projets (ordi) */
+@media (min-width:992px){
+  #realisations{overflow:hidden;padding:6rem 0 4rem}
+  .work_grid{display:flex;gap:2rem;width:max-content}
+  .work_item,.work_item.is-wide{flex:none;width:83.2vh}
+  .work_item.is-wide .work_image{aspect-ratio:16/10}
+}
+@media (max-width:991px){
+  .section_header{grid-template-columns:1fr}
+  .service_row{grid-template-columns:1fr}
+  .hero_bottom{left:1.25rem;right:1.25rem;flex-direction:column;gap:.9rem}
+  .hero_bottom .text-mono:last-child{display:none}
+}
+
+/* ---- Services : cartes avec mini-maquette illustrée ---- */
+.services_grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.25rem}
+.service_card{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:rgba(15,15,18,.88);backdrop-filter:blur(16px);transition:border-color .35s,transform .35s}
+.service_card:hover{border-color:#51487a}
+.service_visual{aspect-ratio:16/9;overflow:hidden;border-bottom:1px solid var(--line);background:radial-gradient(ellipse at 50% 0,#1d1933,transparent 70%)}
+.service_info{display:grid;grid-template-columns:1fr auto;align-items:end;gap:.5rem 1rem;padding:1.4rem 1.6rem 1.6rem}
+.service_info .text-mono:first-child{grid-column:1/-1}
+.service_info h3{font-size:clamp(1.7rem,2.8vw,2.5rem);font-weight:500;letter-spacing:-.035em;line-height:1.05}
+.wf{display:block;width:100%;height:100%}
+.wf-l{fill:none;stroke:#3d3d46;stroke-width:1.2}
+.wf-b{fill:#141417;stroke:#3d3d46;stroke-width:1.2}
+.wf-f{fill:#2a2a31}
+.wf-a{fill:var(--accent)}
+.wf-as{stroke:var(--accent);stroke-width:1.5}
+.wf-move{transition:transform .7s cubic-bezier(.2,.8,.2,1)}
+.service_card:hover .wf-move.is-up{transform:translateY(-16px)}
+.service_card:hover .wf-move.is-left{transform:translateX(-14px)}
+.service_card:hover .wf-move.is-right{transform:translate(14px,4px)}
+@media (max-width:767px){.services_grid{grid-template-columns:1fr}}
+.service_visual img{width:100%;height:100%;object-fit:cover;transition:transform 1s cubic-bezier(.2,.8,.2,1)}
+.service_card:hover .service_visual img{transform:scale(1.05)}
+/* ---- Vidéo du tunnel pilotée par le scroll (suite d'images) ---- */
+#seq{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.has-seq .heading-style-h1{text-shadow:0 4px 60px rgba(0,0,0,.7)}
+</style>
+</head>
+<body>
+<div class="preloader" id="preloader" aria-hidden="true">
+  <span class="text-mono">Charika Web</span>
+  <span class="preloader_count" id="preCount">0</span>
+</div>
+<canvas id="webgl" aria-hidden="true"></canvas>
+<canvas id="seq" aria-hidden="true"></canvas>
+<div class="grain" aria-hidden="true"></div>
+<div class="cursor" id="cursor" aria-hidden="true"><span>Voir</span></div>
+
+<div class="page-wrapper">
+  <header class="nav_component">
+    <div class="padding-global"><div class="container-large nav_inner">
+      <a href="#" class="nav_logo">Charika Web</a>
+      <nav class="nav_links" aria-label="Navigation principale">
+        <a href="#realisations">Réalisations</a><a href="#services">Services</a><a href="#methode">Méthode</a>
+      </nav>
+      <a href="#contact" class="nav_cta">Me contacter</a>
+    </div></div>
+  </header>
+
+  <main class="main-wrapper">
+    <!-- HERO -->
+    <section class="section_hero">
+      <div class="padding-global"><div class="container-large">
+        <h1 class="heading-style-h1">
+          <span class="line"><span class="line_inner">Des sites</span></span>
+          <span class="line"><span class="line_inner">qui <em>vendent.</em></span></span>
+        </h1>
+      </div></div>
+      <div class="hero_bottom">
+        <span class="text-mono hero_fade">Studio web — Paris</span>
+        <a href="#contact" class="button is-primary hero_fade">Demander ma maquette</a>
+        <span class="text-mono hero_fade">Scroll ↓</span>
+      </div>
+    </section>
+
+    <!-- RÉALISATIONS -->
+    <section class="section" id="realisations">
+      <div class="padding-global"><div class="container-large">
+        <div class="section_header">
+          <span class="text-mono fade-up">( 01 ) Réalisations</span>
+          <h2 class="heading-style-h2" data-lines><span class="line"><span class="line_inner">Projets récents</span></span></h2>
+        </div>
+        <div class="work_grid">
+          <!-- Mettre les captures dans images/ ; sans image, le placeholder s'affiche. -->
+          <a href="https://dbla-design.com" target="_blank" rel="noopener" class="work_item is-wide">
+            <div class="work_image"><div class="work_image-inner">
+              <div class="work_placeholder">DBLA Sound</div>
+              <img src="images/dbla.jpg" alt="Boutique Shopify DBLA Sound" onerror="this.remove()">
+            </div></div>
+            <div class="work_meta"><h3>DBLA Sound</h3><span class="text-mono">Shopify</span></div>
+          </a>
+          <a href="#" class="work_item">
+            <div class="work_image"><div class="work_image-inner">
+              <div class="work_placeholder">L'Épaviste IDF</div>
+              <img src="images/epaviste.jpg" alt="Landing page L'Épaviste IDF 94" onerror="this.remove()">
+            </div></div>
+            <div class="work_meta"><h3>L'Épaviste IDF 94</h3><span class="text-mono">Landing page</span></div>
+          </a>
+          <a href="#" class="work_item">
+            <div class="work_image"><div class="work_image-inner">
+              <div class="work_placeholder">CCDLS</div>
+              <img src="images/ccdls.jpg" alt="Site CCDLS" onerror="this.remove()">
+            </div></div>
+            <div class="work_meta"><h3>CCDLS</h3><span class="text-mono">Site vitrine</span></div>
+          </a>
+        </div>
+      </div></div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="section" id="services">
+      <div class="padding-global"><div class="container-large">
+        <div class="section_header">
+          <span class="text-mono fade-up">( 02 ) Services</span>
+          <h2 class="heading-style-h2" data-lines><span class="line"><span class="line_inner">Ce que je fais</span></span></h2>
+        </div>
+        <div class="services_grid">
+          <article class="service_card fade-up">
+            <div class="service_visual"><img src="images/service-landing.png" alt="Landing page" loading="lazy" onerror="this.onerror=null;this.src='https://d8j0ntlcm91z4.cloudfront.net/user_3EZoGdWtvB0f1IqRtb79k7HnOgj/hf_20261113_113800_a0c010c3-a13e-4e03-91dd-29f26c46a7e7.png'"></div>
+            <div class="service_info"><span class="text-mono">A</span><h3>Landing page</h3><span class="text-mono">Webflow · Framer</span></div>
+          </article>
+          <article class="service_card fade-up">
+            <div class="service_visual"><img src="images/service-vitrine.png" alt="Site vitrine" loading="lazy" onerror="this.onerror=null;this.src='https://d8j0ntlcm91z4.cloudfront.net/user_3EZoGdWtvB0f1IqRtb79k7HnOgj/hf_20261113_113801_582c0d87-e1cd-4552-a0b0-8a2747d8e902.png'"></div>
+            <div class="service_info"><span class="text-mono">B</span><h3>Site vitrine</h3><span class="text-mono">Webflow · Framer</span></div>
+          </article>
+          <article class="service_card fade-up">
+            <div class="service_visual"><img src="images/service-boutique.png" alt="Boutique en ligne" loading="lazy" onerror="this.onerror=null;this.src='https://d8j0ntlcm91z4.cloudfront.net/user_3EZoGdWtvB0f1IqRtb79k7HnOgj/hf_20261113_113800_0f1d4e70-48e4-4efa-8bf9-011b303f59b8.png'"></div>
+            <div class="service_info"><span class="text-mono">C</span><h3>Boutique en ligne</h3><span class="text-mono">Shopify</span></div>
+          </article>
+          <article class="service_card fade-up">
+            <div class="service_visual"><img src="images/service-refonte.png" alt="Refonte" loading="lazy" onerror="this.onerror=null;this.src='https://d8j0ntlcm91z4.cloudfront.net/user_3EZoGdWtvB0f1IqRtb79k7HnOgj/hf_20261113_113800_bee8abff-ba2a-43aa-94c7-64d32f2aea6c.png'"></div>
+            <div class="service_info"><span class="text-mono">D</span><h3>Refonte</h3><span class="text-mono">Tous outils</span></div>
+          </article>
+        </div>
+      </div></div>
+    </section>
+
+    <!-- MÉTHODE -->
+    <section class="section" id="methode">
+      <div class="padding-global"><div class="container-large">
+        <div class="section_header">
+          <span class="text-mono fade-up">( 03 ) Méthode</span>
+          <h2 class="heading-style-h2" data-lines><span class="line"><span class="line_inner">Comment</span></span><span class="line"><span class="line_inner">ça se passe</span></span></h2>
+        </div>
+        <div class="process_grid fade-up">
+          <div class="process_item"><span class="text-mono">01</span><h3>Échange</h3></div>
+          <div class="process_item"><span class="text-mono">02</span><h3>Maquette</h3></div>
+          <div class="process_item"><span class="text-mono">03</span><h3>Création</h3></div>
+          <div class="process_item"><span class="text-mono">04</span><h3>Mise en ligne</h3></div>
+        </div>
+      </div></div>
+    </section>
+
+    <!-- GRAND TEXTE -->
+    <div class="section_bigtext" aria-hidden="true">
+      <div class="bigtext_track">
+        <span>Landing pages</span><span>Sites vitrines</span><span>Shopify</span><span>Refonte</span><span>Landing pages</span><span>Sites vitrines</span>
+      </div>
+    </div>
+
+    <!-- CONTACT -->
+    <section class="section_contact" id="contact">
+      <div class="padding-global" style="width:100%"><div class="container-large">
+        <div class="contact_inner">
+          <span class="text-mono fade-up">( 04 ) Contact</span>
+          <h2 class="contact_title" data-lines>
+            <span class="line"><span class="line_inner">Un projet ?</span></span>
+            <span class="line"><span class="line_inner text-color-muted">Parlons-en.</span></span>
+          </h2>
+          <div class="contact_buttons fade-up">
+            <a href="https://instagram.com/charika.web" target="_blank" rel="noopener" class="button is-primary">Instagram — @charika.web</a>
+            <a href="mailto:m.hadjhenni@outlook.fr" class="button is-secondary">m.hadjhenni@outlook.fr</a>
+          </div>
+        </div>
+      </div></div>
+    </section>
+  </main>
+
+  <footer class="footer_component">
+    <div class="padding-global"><div class="container-large footer_inner">
+      <span class="text-mono">© 2026 Charika Web</span><span class="text-mono">Paris, France</span>
+    </div></div>
+  </footer>
+</div>
+
+<!-- Tunnel : les images de frames/ défilent avec le scroll. Sans ces images, la 3D reste seule. -->
+<script>
+(function(){
+  var N = 120, c = document.getElementById('seq'), ctx = c.getContext('2d'), imgs = [], cur = -1, f = 0;
+  function src(i){ return 'frames/f_' + String(i+1).padStart(3,'0') + '.jpg'; }
+  function clamp(v){ return Math.max(0, Math.min(1, v)); }
+  function size(){ var r = Math.min(devicePixelRatio, 2); c.width = innerWidth*r; c.height = innerHeight*r; cur = -1; }
+  function draw(i){
+    var im = imgs[i]; if(!im || !im.complete || !im.naturalWidth) return;
+    // Cadrage « cover » : l'image remplit l'écran sans se déformer
+    var s = Math.max(c.width/im.naturalWidth, c.height/im.naturalHeight), w = im.naturalWidth*s, h = im.naturalHeight*s;
+    ctx.drawImage(im, (c.width-w)/2, (c.height-h)/2, w, h); cur = i;
+  }
+  function loop(){
+    requestAnimationFrame(loop);
+    var d = (window.__heroPin || .6) * innerHeight;      // distance de scroll du tunnel
+    f += (clamp(scrollY/d)*(N-1) - f) * .25;             // léger lissage
+    var i = Math.round(f); if(i !== cur) draw(i);
+    c.style.opacity = 1 - clamp((scrollY - d)/(innerHeight*.6));
+  }
+  var first = new Image();
+  first.onload = function(){
+    document.documentElement.classList.add('has-seq'); imgs[0] = first;
+    for(var i=1;i<N;i++){ var im = new Image(); im.src = src(i); imgs[i] = im; }
+    size(); addEventListener('resize', size); loop();
+  };
+  // Images absentes : on retire le tunnel et on annule le figeage du haut de page
+  first.onerror = function(){
+    c.remove(); window.__heroPin = 0;
+    (window.__heroST || []).forEach(function(t){ t.kill(true); });
+    if(window.gsap){ gsap.set('.section_hero > *', {clearProps:'opacity,transform'}); ScrollTrigger.refresh(); }
+  };
+  first.src = src(0);
+})();
+</script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+
+<!-- Interface : chargement, scroll fluide, animations de texte, curseur -->
+<script>
+(function(){
+  var pre = document.getElementById('preloader'), count = document.getElementById('preCount');
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Sans GSAP (CDN indisponible) ou en mouvement réduit : page affichée telle quelle
+  if(!window.gsap || !window.ScrollTrigger || reduce){ pre.remove(); return; }
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Scroll fluide
+  var lenis = null;
+  if(window.Lenis){
+    lenis = new Lenis();
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add(function(t){ lenis.raf(t*1000); });
+    gsap.ticker.lagSmoothing(0);
+    lenis.stop();
+  }
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click', function(e){
+      var h = a.getAttribute('href'); e.preventDefault();
+      if(h.length < 2) return;
+      if(lenis) lenis.scrollTo(h); else document.querySelector(h).scrollIntoView();
+    });
+  });
+
+  // Intro : compteur → rideau → titre ligne par ligne
+  gsap.set('.section_hero .line_inner', {yPercent:110});
+  gsap.set('.hero_fade', {opacity:0, y:20});
+  var o = {v:0};
+  gsap.timeline()
+    .to(o, {v:100, duration:1.3, ease:'power2.inOut', onUpdate:function(){ count.textContent = Math.round(o.v); }})
+    .to(pre, {yPercent:-100, duration:.9, ease:'power4.inOut'})
+    .to('.section_hero .line_inner', {yPercent:0, duration:1.1, ease:'power4.out', stagger:.09}, '-=.35')
+    .to('.hero_fade', {opacity:1, y:0, duration:.8, ease:'power3.out', stagger:.08}, '-=.75')
+    .add(function(){ pre.remove(); if(lenis) lenis.start(); });
+
+  // Haut de page : la page se fige pendant la traversée du tunnel, le titre s'efface
+  if(document.getElementById('seq')){
+    window.__heroPin = 2;
+    var fade = gsap.to('.section_hero > *', {opacity:0, y:-50, ease:'none', scrollTrigger:{trigger:'.section_hero', start:'top top', end:'+=90%', scrub:true}});
+    window.__heroST = [ScrollTrigger.create({trigger:'.section_hero', start:'top top', end:'+=200%', pin:true, refreshPriority:2}), fade.scrollTrigger];
+  }
+  // Titres de section
+  document.querySelectorAll('[data-lines]').forEach(function(el){
+    gsap.from(el.querySelectorAll('.line_inner'), {yPercent:110, duration:1.1, ease:'power4.out', stagger:.09, scrollTrigger:{trigger:el, start:'top 88%'}});
+  });
+  // Apparitions simples
+  document.querySelectorAll('.fade-up').forEach(function(el){
+    gsap.from(el, {opacity:0, y:30, duration:.9, ease:'power3.out', scrollTrigger:{trigger:el, start:'top 90%'}});
+  });
+  // Projets : l'image se dévoile de bas en haut, puis léger parallaxe
+  document.querySelectorAll('.work_item').forEach(function(item){
+    var img = item.querySelector('.work_image'), inner = item.querySelector('.work_image-inner');
+    gsap.fromTo(img, {clipPath:'inset(100% 0% 0% 0%)'}, {clipPath:'inset(0% 0% 0% 0%)', duration:1.3, ease:'power4.inOut', scrollTrigger:{trigger:item, start:'top 85%'}});
+    gsap.fromTo(inner, {yPercent:-5}, {yPercent:5, ease:'none', scrollTrigger:{trigger:item, start:'top bottom', end:'bottom top', scrub:true}});
+    gsap.from(item.querySelector('.work_meta'), {opacity:0, y:20, duration:.8, delay:.4, scrollTrigger:{trigger:item, start:'top 85%'}});
+  });
+  // Projets : la section se fige et la galerie défile à l'horizontale (ordi)
+  gsap.matchMedia().add('(min-width: 992px)', function(){
+    var track = document.querySelector('.work_grid');
+    var dist = function(){ return track.scrollWidth - track.parentElement.clientWidth; };
+    gsap.to(track, {x:function(){ return -dist(); }, ease:'none',
+      scrollTrigger:{trigger:'#realisations', pin:true, scrub:1, start:'top top', end:function(){ return '+=' + dist(); }, invalidateOnRefresh:true, refreshPriority:1}});
+  });
+  // Grand texte piloté par le scroll
+  gsap.fromTo('.bigtext_track', {xPercent:5}, {xPercent:-35, ease:'none', scrollTrigger:{trigger:'.section_bigtext', start:'top bottom', end:'bottom top', scrub:true}});
+
+  // Curseur
+  if(matchMedia('(pointer:fine)').matches){
+    var cur = document.getElementById('cursor');
+    gsap.set(cur, {xPercent:-50, yPercent:-50});
+    var qx = gsap.quickTo(cur, 'x', {duration:.35, ease:'power3'}), qy = gsap.quickTo(cur, 'y', {duration:.35, ease:'power3'});
+    addEventListener('pointermove', function(e){ qx(e.clientX); qy(e.clientY); });
+    document.querySelectorAll('a').forEach(function(a){
+      var cls = a.classList.contains('work_item') ? 'is-view' : 'is-hover';
+      a.addEventListener('pointerenter', function(){ cur.classList.add(cls); });
+      a.addEventListener('pointerleave', function(){ cur.classList.remove(cls); });
+    });
+  }
+})();
+</script>
+
+<script type="importmap">
+{"imports":{
+  "three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+}}
+</script>
+<!-- Scène 3D : objet chrome irisé, reflets d'environnement, bloom, pilotée par le scroll -->
+<script type="module">
+import * as THREE from 'three';
+import {EffectComposer} from 'three/addons/postprocessing/EffectComposer.js';
+import {RenderPass} from 'three/addons/postprocessing/RenderPass.js';
+import {UnrealBloomPass} from 'three/addons/postprocessing/UnrealBloomPass.js';
+import {OutputPass} from 'three/addons/postprocessing/OutputPass.js';
+import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
+
+const canvas = document.getElementById('webgl');
+const renderer = new THREE.WebGLRenderer({canvas, antialias:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio, 1.75));
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color('#0b0b0c');
+// Environnement de studio généré : c'est lui qui donne les reflets
+scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), .04).texture;
+
+const camera = new THREE.PerspectiveCamera(40, 1, .1, 100);
+camera.position.z = 7;
+
+const mat = new THREE.MeshPhysicalMaterial({
+  color:'#16161d', metalness:1, roughness:.14, envMapIntensity:1,
+  clearcoat:1, clearcoatRoughness:.1,
+  iridescence:1, iridescenceIOR:1.7, iridescenceThicknessRange:[120, 520]
+});
+// Ondulation « liquide » injectée dans le shader du matériau
+const uTime = {value:0};
+mat.onBeforeCompile = s=>{
+  s.uniforms.uTime = uTime;
+  s.vertexShader = 'uniform float uTime;\n' + s.vertexShader.replace('#include <begin_vertex>',
+    '#include <begin_vertex>\n transformed += normal*(sin(position.y*3.+uTime*1.3)*.05 + sin(position.x*4.-uTime)*.04);');
+};
+const rig = new THREE.Group();
+const knot = new THREE.Mesh(new THREE.TorusKnotGeometry(1, .34, 320, 48, 2, 3), mat);
+rig.add(knot);
+
+// Satellites en orbite
+const COUNT = 60, sats = new THREE.InstancedMesh(new THREE.SphereGeometry(1, 24, 24), mat, COUNT), m4 = new THREE.Matrix4();
+for(let i=0;i<COUNT;i++){
+  const r = 2 + Math.random()*1.6, th = Math.random()*Math.PI*2, ph = Math.acos(2*Math.random()-1), s = .025 + Math.random()*.09;
+  m4.makeScale(s,s,s).setPosition(r*Math.sin(ph)*Math.cos(th), r*Math.sin(ph)*Math.sin(th), r*Math.cos(ph));
+  sats.setMatrixAt(i, m4);
+}
+rig.add(sats);
+scene.add(rig);
+
+// Poussière en profondeur, qui défile avec le scroll
+const dp = new Float32Array(2500*3);
+for(let i=0;i<2500;i++) dp.set([(Math.random()-.5)*26, (Math.random()-.5)*40, -Math.random()*14+2], i*3);
+const dust = new THREE.Points(new THREE.BufferGeometry().setAttribute('position', new THREE.BufferAttribute(dp,3)),
+  new THREE.PointsMaterial({size:.03, color:'#9a96b8', transparent:true, opacity:.7}));
+scene.add(dust);
+
+const l1 = new THREE.PointLight(0x9d84ff, 60); l1.position.set(3, 2, 4); scene.add(l1);
+const l2 = new THREE.PointLight(0xffb38a, 25); l2.position.set(-4, -2, 3); scene.add(l2);
+
+const composer = new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene, camera));
+const bloom = new UnrealBloomPass(new THREE.Vector2(1,1), .35, .7, .82);
+composer.addPass(bloom);
+composer.addPass(new OutputPass());
+
+let mobile = false;
+function resize(){
+  const w = innerWidth, h = innerHeight;
+  mobile = w < 992;
+  renderer.setSize(w, h, false); composer.setSize(w, h);
+  camera.aspect = w/h; camera.updateProjectionMatrix();
+}
+addEventListener('resize', resize); resize();
+
+const mouse = {x:0,y:0}, sm = {x:0,y:0};
+addEventListener('pointermove', e=>{ mouse.x = e.clientX/innerWidth*2-1; mouse.y = e.clientY/innerHeight*2-1; });
+
+const L = THREE.MathUtils.lerp, C = THREE.MathUtils.clamp;
+const speed = matchMedia('(prefers-reduced-motion: reduce)').matches ? .15 : 1;
+const clock = new THREE.Clock();
+(function tick(){
+  requestAnimationFrame(tick);
+  const t = clock.getElapsedTime()*speed;
+  const max = Math.max(1, document.documentElement.scrollHeight - innerHeight);
+  const a = C(scrollY/innerHeight, 0, 1);                       // sortie du hero
+  const b = C((scrollY - (max - innerHeight))/innerHeight, 0, 1); // arrivée sur le contact
+  const p = scrollY/max;
+
+  // Trois états : hero (net, à droite) → milieu (grand, discret, en fond) → contact (de retour)
+  const xHero = 0, xMid = Math.sin(p*9)*(mobile ? .8 : 3.2), xEnd = mobile ? 0 : 2.5;
+  const yHero = .15, yEnd = mobile ? 1.5 : 0;
+  const sHero = mobile ? .62 : 1.25, sMid = mobile ? .9 : 1.3, sEnd = mobile ? .5 : 1.05;
+  rig.position.x = L(L(xHero, xMid, a), xEnd, b);
+  rig.position.y = L(L(yHero, -.4, a), yEnd, b);
+  rig.scale.setScalar(L(L(sHero, sMid, a), sEnd, b));
+  canvas.style.opacity = L(L(1, mobile ? .28 : .42, a), mobile ? .55 : 1, b);
+
+  sm.x += (mouse.x-sm.x)*.04; sm.y += (mouse.y-sm.y)*.04;
+  knot.rotation.set(t*.12 + sm.y*.35 + p*5, t*.18 + sm.x*.5 + p*7, 0);
+  sats.rotation.set(sm.y*.2, -t*.07 + sm.x*.3 + p*3, t*.03);
+  l1.position.x = 3 + sm.x*2; l1.position.y = 2 - sm.y*2;
+  uTime.value = t; dust.position.y = p*12; dust.rotation.y = sm.x*.05;
+  composer.render();
+})();
+</script>
+</body>
+</html>
