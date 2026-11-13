@@ -382,6 +382,22 @@ p{text-wrap:pretty}
 .contact_note{font-size:clamp(1.15rem,1.7vw,1.35rem)}
 @media (min-width:768px) and (max-width:1100px){.process_grid{grid-template-columns:1fr 1fr}}
 .hero_bottom .text-mono:first-child{font-family:var(--font);text-transform:none;letter-spacing:0;font-size:1rem;font-weight:500;color:#fff;text-shadow:0 1px 12px rgba(0,0,0,.9)}
+/* ---- Respiration : titres moins serrés, espaces entre blocs ---- */
+.heading-style-h1{letter-spacing:-.035em;line-height:1}
+.heading-style-h2{letter-spacing:-.025em;line-height:1.08}
+.contact_title{letter-spacing:-.035em;line-height:1.02;margin-bottom:2rem}
+.bigtext_track{letter-spacing:-.03em}
+.about_by{letter-spacing:-.02em}
+.service_info h3{letter-spacing:-.02em;line-height:1.1}
+.process_item h3{letter-spacing:-.015em;line-height:1.15}
+.about_text .about_lead{letter-spacing:-.01em;line-height:1.35}
+.contact_note{margin:0 0 2.2rem}
+.contact_buttons{gap:1rem}
+@media (max-width:767px){
+  .padding-global{padding-left:1.5rem;padding-right:1.5rem}
+  .contact_title{margin:1.2rem 0 1.6rem}
+  .contact_note{margin-bottom:2rem}
+}
 </style>
 </head>
 <body>
@@ -485,7 +501,7 @@ p{text-wrap:pretty}
           </div>
           <div class="about_text">
             <p class="about_lead">Je crée ton site moi-même, du début à la fin.</p>
-            <p>Tu n'as rien à connaître à l'informatique : tu me parles de ton métier, je m'occupe de tout le reste. Je travaille avec des artisans, des dépanneurs, des salons d'ongles et des indépendants qui veulent plus de clients.</p>
+            <p>Tu n'as rien à connaître à l'informatique&nbsp;: tu me parles de ton métier, je m'occupe de tout le reste. Je travaille avec des artisans, des dépanneurs, des salons d'ongles et des indépendants qui veulent plus de clients.</p>
             <ul class="about_facts">
               <li><span class="text-mono">Où</span>Paris</li>
               <li><span class="text-mono">Contact</span>Directement avec moi, sur WhatsApp</li>
@@ -509,10 +525,10 @@ p{text-wrap:pretty}
         <div class="contact_inner">
           <span class="text-mono fade-up">( 04 ) Contact</span>
           <h2 class="contact_title" data-lines>
-            <span class="line"><span class="line_inner">Un projet ?</span></span>
+            <span class="line"><span class="line_inner">Un projet&nbsp;?</span></span>
             <span class="line"><span class="line_inner text-color-muted">Parlons-en.</span></span>
           </h2>
-          <p class="contact_note fade-up">Envoie-moi un message : ta maquette est gratuite et prête en 48 h.</p>
+          <p class="contact_note fade-up">Envoie-moi un message&nbsp;: ta maquette est gratuite et prête en 48 h.</p>
           <div class="contact_buttons fade-up">
             <a href="https://wa.me/message/AXORZOBAWECGN1" target="_blank" rel="noopener" class="button is-primary" aria-label="Demander ma maquette sur WhatsApp">Écrire sur WhatsApp</a>
             <a href="https://instagram.com/charika.web" target="_blank" rel="noopener" class="button is-secondary">Instagram — @charika.web</a>
