@@ -20,9 +20,8 @@ One-page pour démarcher des clients (artisans, indépendants, PME). Objectif un
 1. Nav : pilule en verre fixe, bouton « Demander ma maquette » toujours visible
 2. Hero : tunnel 3D piloté par le scroll (canvas `#seq`, section figée 130 %), titre « Des sites qui vendent. »
 3. Services (`#services`) : 4 cartes, inclinaison 3D au survol (`.t-tilt`, transitions.dev)
-4. Réalisations (`#realisations`) : 3 petites cartes, captures manquantes (placeholders)
-5. Méthode (`#methode`) : 4 tuiles
-6. Grand texte défilant, puis Contact (`#contact`)
+4. Méthode (`#methode`) : 4 tuiles
+5. Grand texte défilant, puis Contact (`#contact`)
 
 ## Technique
 
@@ -40,9 +39,9 @@ One-page pour démarcher des clients (artisans, indépendants, PME). Objectif un
 
 ## Reste à faire
 
-- [ ] Lien WhatsApp (`wa.me/…`) à la place du bouton mail, et sur « Demander ma maquette » (numéro à fournir)
+- [x] Lien WhatsApp `https://wa.me/message/AXORZOBAWECGN1` sur tous les « Demander ma maquette » et au contact (mail retiré)
+- [x] Section Réalisations retirée (décision : pas de projets montrés)
 - [ ] Logo dans la nav (4 pistes générées sur Higgsfield, choix en attente)
-- [ ] Captures réelles dans Réalisations : `images/dbla.jpg`, `epaviste.jpg`, `ccdls.jpg`
 - [ ] Avis clients si disponibles
 
 ## Règles de travail

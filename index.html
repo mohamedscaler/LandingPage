@@ -80,20 +80,6 @@ img{display:block;max-width:100%}
 .heading-style-h2{font-size:clamp(2.2rem,5vw,4.2rem);font-weight:500;line-height:1;letter-spacing:-.04em}
 .section_header p{color:var(--muted);max-width:420px}
 
-/* Réalisations */
-.work_grid{display:grid;grid-template-columns:repeat(2,1fr);gap:4rem 2rem}
-.work_item{display:block}
-.work_item.is-wide{grid-column:span 2}
-.work_image{position:relative;aspect-ratio:16/10;border-radius:10px;overflow:hidden;background:var(--surface)}
-.work_item.is-wide .work_image{aspect-ratio:21/9}
-.work_image-inner{position:absolute;inset:-8% 0;transition:transform 1s cubic-bezier(.2,.8,.2,1)}
-.work_item:hover .work_image-inner{transform:scale(1.04)}
-.work_image img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top}
-.work_placeholder{position:absolute;inset:0;display:grid;place-items:center;font-size:clamp(1.8rem,4vw,3.4rem);font-weight:500;letter-spacing:-.04em;color:#45454b;background:radial-gradient(circle at 70% 20%,#1d1a2b,var(--surface) 60%)}
-.work_meta{display:grid;grid-template-columns:1fr auto;gap:.3rem 1rem;margin-top:1.2rem}
-.work_meta h3{font-size:1.4rem;font-weight:500;letter-spacing:-.02em}
-.work_meta .text-mono{align-self:center}
-.work_meta p{grid-column:1/-1;color:var(--muted);font-size:.95rem}
 
 /* Services */
 .services_list{border-top:1px solid var(--line)}
@@ -140,9 +126,6 @@ img{display:block;max-width:100%}
   .info_item:nth-child(-n+2){border-bottom:1px solid var(--line)}
   .section{padding:5rem 0}
   .section_header{grid-template-columns:1fr;gap:1rem;margin-bottom:3rem}
-  .work_grid{grid-template-columns:1fr;gap:2.5rem}
-  .work_item.is-wide{grid-column:auto}
-  .work_item.is-wide .work_image{aspect-ratio:16/10}
   .service_row{grid-template-columns:1fr;gap:.5rem}
   .service_row .text-mono:last-child{text-align:left}
   .process_grid{grid-template-columns:1fr 1fr}
@@ -203,23 +186,6 @@ img{display:block;max-width:100%}
 /* ---- Passe UX : hiérarchie et lecture ---- */
 .has-seq .heading-style-h1 em{color:#d2c7ff}
 .section_hero .hero_sub{margin:1.6rem auto 0;max-width:520px;color:#d4d4da;font-size:1.15rem;text-shadow:0 2px 24px rgba(0,0,0,.8)}
-/* ---- Réalisations : version compacte (3 petites cartes sur une ligne) ---- */
-#realisations{padding:5rem 0}
-#realisations .section_header{margin-bottom:2rem}
-#realisations .heading-style-h2{font-size:clamp(1.8rem,3vw,2.6rem)}
-.work_grid{grid-template-columns:repeat(3,1fr);gap:1.25rem}
-.work_item.is-wide{grid-column:auto}
-.work_image,.work_item.is-wide .work_image{aspect-ratio:4/3}
-.work_placeholder{font-size:clamp(1.1rem,1.8vw,1.6rem)}
-.work_meta{margin-top:.8rem}
-.work_meta h3{font-size:1.05rem}
-@media (max-width:991px){
-  #realisations{padding:3.5rem 0}
-  /* Mobile : une ligne à faire glisser au doigt */
-  .work_grid{display:flex;gap:1rem;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -1.25rem;padding:0 1.25rem .5rem;scrollbar-width:none}
-  .work_grid::-webkit-scrollbar{display:none}
-  .work_item{flex:none;width:68vw;scroll-snap-align:center}
-}
 /* ================= Passe « verre » façon Apple ================= */
 :root{--ease:cubic-bezier(.32,.72,0,1);--hair:rgba(255,255,255,.1)}
 /* Matière verre : flou + saturation, liseré clair en haut, ombre douce. Réservée aux éléments fixes et aux boutons. */
@@ -262,7 +228,6 @@ img{display:block;max-width:100%}
 .service_info{padding:1.3rem 1.3rem 1.2rem}
 .services_grid{gap:1.5rem}
 
-.work_image{border:1px solid var(--hair);border-radius:1.4rem;box-shadow:inset 0 1px 0 rgba(255,255,255,.1)}
 
 .process_grid{border:0;border-radius:0;background:none;overflow:visible;gap:1rem}
 .process_grid .process_item,.process_grid .process_item:last-child{border:1px solid var(--hair);border-radius:1.6rem;background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.02));box-shadow:inset 0 1px 0 rgba(255,255,255,.14);min-height:210px;transition:transform .6s var(--ease),border-color .6s var(--ease)}
@@ -356,7 +321,7 @@ img{display:block;max-width:100%}
     <div class="padding-global"><div class="container-large nav_inner">
       <a href="#" class="nav_logo">Charika Web</a>
       <nav class="nav_links" aria-label="Navigation principale">
-        <a href="#services">Services</a><a href="#realisations">Réalisations</a><a href="#methode">Méthode</a>
+        <a href="#services">Services</a><a href="#methode">Méthode</a>
       </nav>
       <a href="https://wa.me/message/AXORZOBAWECGN1" target="_blank" rel="noopener" class="nav_cta">Demander ma maquette</a>
     </div></div>
@@ -411,45 +376,11 @@ img{display:block;max-width:100%}
       </div></div>
     </section>
 
-    <!-- RÉALISATIONS -->
-    <section class="section" id="realisations">
-      <div class="padding-global"><div class="container-large">
-        <div class="section_header">
-          <span class="text-mono fade-up">( 02 ) Réalisations</span>
-          <h2 class="heading-style-h2" data-lines><span class="line"><span class="line_inner">Projets récents</span></span></h2>
-        </div>
-        <div class="work_grid">
-          <!-- Mettre les captures dans images/ ; sans image, le placeholder s'affiche. -->
-          <a href="https://dbla-design.com" target="_blank" rel="noopener" class="work_item is-wide">
-            <div class="work_image"><div class="work_image-inner">
-              <div class="work_placeholder">DBLA Sound</div>
-              <img src="images/dbla.jpg" alt="Boutique Shopify DBLA Sound" onerror="this.remove()">
-            </div></div>
-            <div class="work_meta"><h3>DBLA Sound</h3><span class="text-mono">Shopify</span></div>
-          </a>
-          <a href="#" class="work_item">
-            <div class="work_image"><div class="work_image-inner">
-              <div class="work_placeholder">L'Épaviste IDF</div>
-              <img src="images/epaviste.jpg" alt="Landing page L'Épaviste IDF 94" onerror="this.remove()">
-            </div></div>
-            <div class="work_meta"><h3>L'Épaviste IDF 94</h3><span class="text-mono">Landing page</span></div>
-          </a>
-          <a href="#" class="work_item">
-            <div class="work_image"><div class="work_image-inner">
-              <div class="work_placeholder">CCDLS</div>
-              <img src="images/ccdls.jpg" alt="Site CCDLS" onerror="this.remove()">
-            </div></div>
-            <div class="work_meta"><h3>CCDLS</h3><span class="text-mono">Site vitrine</span></div>
-          </a>
-        </div>
-      </div></div>
-    </section>
-
     <!-- MÉTHODE -->
     <section class="section" id="methode">
       <div class="padding-global"><div class="container-large">
         <div class="section_header">
-          <span class="text-mono fade-up">( 03 ) Méthode</span>
+          <span class="text-mono fade-up">( 02 ) Méthode</span>
           <h2 class="heading-style-h2" data-lines><span class="line"><span class="line_inner">Comment</span></span><span class="line"><span class="line_inner">ça se passe</span></span></h2>
         </div>
         <div class="process_grid fade-up">
@@ -472,7 +403,7 @@ img{display:block;max-width:100%}
     <section class="section_contact" id="contact">
       <div class="padding-global" style="width:100%"><div class="container-large">
         <div class="contact_inner">
-          <span class="text-mono fade-up">( 04 ) Contact</span>
+          <span class="text-mono fade-up">( 03 ) Contact</span>
           <h2 class="contact_title" data-lines>
             <span class="line"><span class="line_inner">Un projet ?</span></span>
             <span class="line"><span class="line_inner text-color-muted">Parlons-en.</span></span>
@@ -585,13 +516,6 @@ img{display:block;max-width:100%}
   document.querySelectorAll('.fade-up').forEach(function(el){
     gsap.from(el, {opacity:0, y:20, duration:.6, ease:'power3.out', scrollTrigger:{trigger:el, start:'top 95%'}});
   });
-  // Projets : l'image se dévoile de bas en haut, puis léger parallaxe
-  document.querySelectorAll('.work_item').forEach(function(item){
-    var img = item.querySelector('.work_image'), inner = item.querySelector('.work_image-inner');
-    gsap.fromTo(img, {clipPath:'inset(100% 0% 0% 0%)'}, {clipPath:'inset(0% 0% 0% 0%)', duration:.9, ease:'power3.inOut', scrollTrigger:{trigger:item, start:'top 90%'}});
-    gsap.fromTo(inner, {yPercent:-5}, {yPercent:5, ease:'none', scrollTrigger:{trigger:item, start:'top bottom', end:'bottom top', scrub:true}});
-    gsap.from(item.querySelector('.work_meta'), {opacity:0, y:20, duration:.6, delay:.2, scrollTrigger:{trigger:item, start:'top 90%'}});
-  });
   // Grand texte piloté par le scroll
   gsap.fromTo('.bigtext_track', {xPercent:5}, {xPercent:-35, ease:'none', scrollTrigger:{trigger:'.section_bigtext', start:'top bottom', end:'bottom top', scrub:true}});
 
@@ -602,7 +526,7 @@ img{display:block;max-width:100%}
     var qx = gsap.quickTo(cur, 'x', {duration:.35, ease:'power3'}), qy = gsap.quickTo(cur, 'y', {duration:.35, ease:'power3'});
     addEventListener('pointermove', function(e){ qx(e.clientX); qy(e.clientY); });
     document.querySelectorAll('a').forEach(function(a){
-      var cls = a.classList.contains('work_item') ? 'is-view' : 'is-hover';
+      var cls = 'is-hover';
       a.addEventListener('pointerenter', function(){ cur.classList.add(cls); });
       a.addEventListener('pointerleave', function(){ cur.classList.remove(cls); });
     });
