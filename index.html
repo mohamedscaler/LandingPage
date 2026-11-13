@@ -7,11 +7,11 @@
 <meta name="description" content="Charika Web conçoit des landing pages, sites vitrines et boutiques Shopify pour artisans, indépendants et PME.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#0b0b0c;--surface:#121214;--text:#ededed;--muted:#a5a5ab;--line:#26262a;--accent:#9d84ff;
-  --font:'Inter Tight',system-ui,sans-serif;--mono:'JetBrains Mono',ui-monospace,monospace;
+  --font:'Geist',-apple-system,system-ui,sans-serif;--mono:'Geist Mono',ui-monospace,monospace;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
@@ -220,6 +220,59 @@ img{display:block;max-width:100%}
   .work_grid::-webkit-scrollbar{display:none}
   .work_item{flex:none;width:68vw;scroll-snap-align:center}
 }
+/* ================= Passe « verre » façon Apple ================= */
+:root{--ease:cubic-bezier(.32,.72,0,1);--hair:rgba(255,255,255,.1)}
+/* Matière verre : flou + saturation, liseré clair en haut, ombre douce. Réservée aux éléments fixes et aux boutons. */
+.nav_inner,.button.is-secondary,.section_header .text-mono{
+  background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.05));
+  -webkit-backdrop-filter:blur(20px) saturate(180%);backdrop-filter:blur(20px) saturate(180%);
+  border:1px solid rgba(255,255,255,.14);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.28),inset 0 -1px 0 rgba(255,255,255,.05),0 12px 40px rgba(0,0,0,.35)}
+
+/* Nav : pilule flottante détachée du haut */
+.nav_component{top:1rem;mix-blend-mode:normal;display:flex;justify-content:center;pointer-events:none}
+.nav_component .padding-global{padding:0}
+.nav_inner{pointer-events:auto;display:flex;align-items:center;gap:1.8rem;width:max-content;height:54px;padding:0 .4rem 0 1.4rem;border-radius:100px}
+.nav_links{gap:1.6rem}
+.nav_cta{display:inline-flex;align-items:center;height:42px;padding:0 1.15rem;border:0;border-radius:100px;background:#fff;color:#0b0b0c;font-weight:500;transition:transform .5s var(--ease)}
+.nav_cta:active{transform:scale(.97)}
+
+/* Titres */
+.heading-style-h1,.heading-style-h2,.contact_title{font-weight:600}
+.heading-style-h1{letter-spacing:-.055em}
+
+/* Boutons : pilules, flèche dans sa propre pastille */
+.button{min-height:54px;padding:0 1.5rem;font-weight:500;transition:transform .5s var(--ease),background .5s var(--ease),border-color .5s var(--ease)}
+.button:active{transform:scale(.98)}
+.button.is-primary{padding-right:.55rem;gap:.9rem;box-shadow:0 10px 40px rgba(157,132,255,.25)}
+.button.is-primary:hover{background:#fff;color:#0b0b0c}
+.button.is-primary::after{content:"\2197";display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:rgba(0,0,0,.08);font-size:1rem;transition:transform .5s var(--ease)}
+.button.is-primary:hover::after{transform:translate(2px,-1px) scale(1.06)}
+.button.is-secondary:hover{border-color:rgba(255,255,255,.3)}
+
+/* En-têtes de section : centrés, pastille au-dessus du titre */
+.section_header{display:flex;flex-direction:column;align-items:center;text-align:center;gap:1.3rem}
+.section_header .text-mono{padding:.45rem 1rem;border-radius:100px;font-size:.68rem;letter-spacing:.18em;color:#d6d6dc;box-shadow:inset 0 1px 0 rgba(255,255,255,.22)}
+
+/* Cartes : coque extérieure + cœur intérieur aux angles concentriques */
+.service_card{padding:.45rem;border-radius:2rem;border:1px solid var(--hair);background:rgba(255,255,255,.04);box-shadow:inset 0 1px 0 rgba(255,255,255,.1);transition:border-color .6s var(--ease),transform .6s var(--ease)}
+.service_card:hover{border-color:rgba(255,255,255,.22);transform:translateY(-4px)}
+.service_visual{border:0;border-radius:calc(2rem - .45rem);box-shadow:inset 0 1px 1px rgba(255,255,255,.15);background:#0a0a0c}
+.service_visual img{transition:transform 1.2s var(--ease)}
+.service_info{padding:1.3rem 1.3rem 1.2rem}
+.services_grid{gap:1.5rem}
+
+.work_image{border:1px solid var(--hair);border-radius:1.4rem;box-shadow:inset 0 1px 0 rgba(255,255,255,.1)}
+
+.process_grid{border:0;border-radius:0;background:none;overflow:visible;gap:1rem}
+.process_grid .process_item,.process_grid .process_item:last-child{border:1px solid var(--hair);border-radius:1.6rem;background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.02));box-shadow:inset 0 1px 0 rgba(255,255,255,.14);min-height:210px;transition:transform .6s var(--ease),border-color .6s var(--ease)}
+.process_grid .process_item:hover{transform:translateY(-4px);border-color:rgba(255,255,255,.22);background:linear-gradient(180deg,rgba(255,255,255,.09),rgba(255,255,255,.03))}
+
+.section_bigtext{border-color:var(--hair)}
+@media (max-width:991px){
+  .nav_inner{gap:1rem;padding-left:1.2rem}
+  .hero_bottom .button{width:auto}
+}
 </style>
 </head>
 <body>
@@ -239,7 +292,7 @@ img{display:block;max-width:100%}
       <nav class="nav_links" aria-label="Navigation principale">
         <a href="#services">Services</a><a href="#realisations">Réalisations</a><a href="#methode">Méthode</a>
       </nav>
-      <a href="#contact" class="nav_cta">Me contacter</a>
+      <a href="#contact" class="nav_cta">Ma maquette</a>
     </div></div>
   </header>
 
