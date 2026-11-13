@@ -22,7 +22,8 @@ One-page pour démarcher des clients (artisans, indépendants, PME). Objectif un
 2. Hero : tunnel 3D piloté par le scroll (canvas `#seq`, section figée 130 %), titre « Des sites qui vendent. »
 3. Services (`#services`) : 4 cartes, inclinaison 3D au survol (`.t-tilt`, transitions.dev)
 4. Méthode (`#methode`) : 4 tuiles
-5. Grand texte défilant, puis Contact (`#contact`)
+5. À propos (`#apropos`) : « by Miro », logo + texte + 3 faits (Paris, WhatsApp, maquette avant engagement). Pas de photo ni de chiffres inventés
+6. Grand texte défilant, puis Contact (`#contact`)
 
 ## Technique
 
