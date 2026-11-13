@@ -337,6 +337,8 @@ img{display:block;max-width:100%}
 .t-tilt-glare{border-radius:inherit;z-index:2}
 /* Jeton de mouvement commun (transitions.dev : --ease-smooth-out) */
 :root{--ease:cubic-bezier(0.22,1,0.36,1)}
+/* Bouton « Demander ma maquette » toujours visible dans la pilule du haut */
+@media (max-width:420px){.nav_inner{gap:.7rem;padding-left:1rem}.nav_logo{font-size:.95rem}.nav_cta{padding:0 .9rem;font-size:.86rem}}
 </style>
 </head>
 <body>
@@ -356,7 +358,7 @@ img{display:block;max-width:100%}
       <nav class="nav_links" aria-label="Navigation principale">
         <a href="#services">Services</a><a href="#realisations">Réalisations</a><a href="#methode">Méthode</a>
       </nav>
-      <a href="#contact" class="nav_cta">Ma maquette</a>
+      <a href="#contact" class="nav_cta">Demander ma maquette</a>
     </div></div>
   </header>
 
