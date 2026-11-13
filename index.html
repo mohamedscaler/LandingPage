@@ -364,6 +364,24 @@ html{scrollbar-color:#2e2e33 var(--bg)}
 }
 /* ---- Note sous le titre Contact ---- */
 .contact_note{margin-top:1.4rem;max-width:34ch;color:var(--text);font-size:clamp(1.1rem,1.6vw,1.3rem);line-height:1.4}
+/* ---- Lisibilité : public non technique, textes plus grands et plus clairs ---- */
+:root{--muted:#c4c4ca}
+body{font-size:18px}
+p{text-wrap:pretty}
+.grain{opacity:.03}
+.section_hero .hero_sub{color:#f2f2f5;font-size:clamp(1.15rem,1.6vw,1.35rem);font-weight:500;line-height:1.45;text-shadow:0 1px 2px rgba(0,0,0,.9),0 2px 30px rgba(0,0,0,.95)}
+.text-mono{letter-spacing:.06em;color:#bdbdc3}
+.process_item p{font-size:1.08rem;line-height:1.5;color:#d2d2d8;max-width:30ch}
+.about_text p{font-size:1.15rem;line-height:1.6;color:#d2d2d8}
+.about_text .about_lead{color:#fff}
+/* Étiquettes qui portent une info : police normale, pas de majuscules forcées */
+.service_info .text-mono:last-child,.about_facts .text-mono,.process_top .text-mono{font-family:var(--font);text-transform:none;letter-spacing:0;font-size:.98rem;color:#cfcfd5}
+.service_info .text-mono:last-child{color:var(--accent)}
+.about_facts .text-mono{font-weight:500;color:var(--accent)}
+.about_facts li{font-size:1.1rem}
+.contact_note{font-size:clamp(1.15rem,1.7vw,1.35rem)}
+@media (min-width:768px) and (max-width:1100px){.process_grid{grid-template-columns:1fr 1fr}}
+.hero_bottom .text-mono:first-child{font-family:var(--font);text-transform:none;letter-spacing:0;font-size:1rem;font-weight:500;color:#fff;text-shadow:0 1px 12px rgba(0,0,0,.9)}
 </style>
 </head>
 <body>
@@ -756,7 +774,7 @@ const clock = new THREE.Clock();
   rig.position.x = L(L(xHero, xMid, a), xEnd, b);
   rig.position.y = L(L(yHero, -.4, a), yEnd, b);
   rig.scale.setScalar(L(L(sHero, sMid, a), sEnd, b));
-  canvas.style.opacity = L(L(1, mobile ? .12 : .3, a), mobile ? .55 : 1, b);
+  canvas.style.opacity = L(L(1, mobile ? .08 : .16, a), mobile ? .55 : 1, b);  // discret derrière les textes
 
   sm.x += (mouse.x-sm.x)*.04; sm.y += (mouse.y-sm.y)*.04;
   knot.rotation.set(t*.12 + sm.y*.35 + p*2, t*.18 + sm.x*.5 + p*3, 0);

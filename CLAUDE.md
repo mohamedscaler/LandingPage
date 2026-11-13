@@ -36,6 +36,7 @@ One-page pour démarcher des clients (artisans, indépendants, PME). Objectif un
 
 - Cible : épavistes, nail artists, artisans, gens qui ne connaissent rien à l'informatique
 - Mots simples, tutoiement. Bannis : landing page, site vitrine, Shopify/Webflow/Framer, refonte, coder, développer
+- Lisibilité d'abord : textes ≥ 18 px, gris clair (#c4c4ca et plus), étiquettes qui portent une info en police normale (pas de mono majuscule)
 - Confirmé par Miro : maquette gratuite sur demande, prête en 48 h
 - Ne rien affirmer d'autre sans son accord (prix, délais du site complet, zone d'intervention)
 
