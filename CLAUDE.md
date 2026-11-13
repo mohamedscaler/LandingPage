@@ -11,13 +11,14 @@ One-page pour démarcher des clients (artisans, indépendants, PME). Objectif un
 | Chemin | Rôle |
 |---|---|
 | `index.html` | Toute la page : HTML, CSS (`<style>`), JS (4 `<script>`) |
-| `frames/` | 120 JPG 1280 px du tunnel (mobile). Ne pas ouvrir |
-| `frames-hd/` | 120 WebP 1920 px du tunnel (ordi). Ne pas ouvrir |
+| `frames/` | 120 JPG 861×1076 (recadrage central de la source, mobile/vertical). Ne pas ouvrir |
+| `frames-hd/` | 120 WebP 1924×1076 q90 (ordi/écran large). Ne pas ouvrir. Source : `~/Downloads/Video landing page charika /Single-continuous-shot-…mp4` |
 | `images/` | `service-{landing,vitrine,boutique,refonte}.jpg`, `logo.jpg`, `favicon.png`, `apple-touch-icon.png` |
 
 ## Structure de la page
 
-1. Nav : pilule en verre fixe, bouton « Demander ma maquette » toujours visible
+1. Nav : pilule en verre fixe avec logo, bouton « Demander ma maquette » (WhatsApp) toujours visible
+   + CTA flottant en bas (`#floatCta`) : apparaît après le tunnel, masqué sur Contact
 2. Hero : tunnel 3D piloté par le scroll (canvas `#seq`, section figée 130 %), titre « Des sites qui vendent. »
 3. Services (`#services`) : 4 cartes, inclinaison 3D au survol (`.t-tilt`, transitions.dev)
 4. Méthode (`#methode`) : 4 tuiles

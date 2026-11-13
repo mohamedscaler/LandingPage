@@ -334,6 +334,13 @@ html{scrollbar-color:#2e2e33 var(--bg)}
 .nav_logo{display:inline-flex;align-items:center;gap:.55rem}
 .nav_logo-mark{width:30px;height:30px;border-radius:8px;mix-blend-mode:screen;flex:none}
 @media (max-width:420px){.nav_logo-mark{width:26px;height:26px}}
+/* ---- CTA flottant : suit le scroll après le tunnel, masqué sur Contact ---- */
+.float_cta{position:fixed;left:50%;bottom:calc(1.25rem + env(safe-area-inset-bottom));z-index:30;display:inline-flex;align-items:center;gap:.7rem;height:54px;padding:0 .5rem 0 1.4rem;border-radius:100px;background:#fff;color:#0b0b0c;font-weight:500;white-space:nowrap;box-shadow:0 14px 34px -12px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.5);transform:translate(-50%,calc(100% + 2rem));opacity:0;pointer-events:none;transition:transform .6s var(--ease),opacity .4s var(--ease)}
+.float_cta.is-visible{transform:translate(-50%,0);opacity:1;pointer-events:auto}
+.float_cta:hover{transform:translate(-50%,-2px)}
+.float_cta_icon{display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:#0b0b0c;color:#fff}
+.float_cta_icon svg{width:19px;height:19px}
+@media (prefers-reduced-motion:reduce){.float_cta,.float_cta.is-visible,.float_cta:hover{transform:translate(-50%,0);transition:opacity .2s}}
 </style>
 </head>
 <body>
@@ -491,6 +498,19 @@ html{scrollbar-color:#2e2e33 var(--bg)}
     if(window.gsap){ gsap.set('.section_hero > *', {clearProps:'opacity,transform'}); ScrollTrigger.refresh(); }
   };
   first.src = src(0);
+})();
+</script>
+  <a href="https://wa.me/message/AXORZOBAWECGN1" target="_blank" rel="noopener" class="float_cta" id="floatCta" aria-label="Demander ma maquette sur WhatsApp" tabindex="-1">Demander ma maquette<span class="float_cta_icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg></span></a>
+<script>
+(function(){
+  var b = document.getElementById('floatCta'), sv = document.getElementById('services'), ct = document.getElementById('contact'), on = false, t = 0;
+  function check(){
+    t = 0;
+    var vh = innerHeight, show = sv.getBoundingClientRect().top < vh * .85 && ct.getBoundingClientRect().top > vh * .75;
+    if(show !== on){ on = show; b.classList.toggle('is-visible', on); b.tabIndex = on ? 0 : -1; b.setAttribute('aria-hidden', String(!on)); }
+  }
+  addEventListener('scroll', function(){ if(!t) t = requestAnimationFrame(check); }, {passive:true});
+  addEventListener('resize', check); check();
 })();
 </script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
