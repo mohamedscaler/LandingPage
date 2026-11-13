@@ -203,6 +203,23 @@ img{display:block;max-width:100%}
 /* ---- Passe UX : hiérarchie et lecture ---- */
 .has-seq .heading-style-h1 em{color:#d2c7ff}
 .section_hero .hero_sub{margin:1.6rem auto 0;max-width:520px;color:#d4d4da;font-size:1.15rem;text-shadow:0 2px 24px rgba(0,0,0,.8)}
+/* ---- Réalisations : version compacte (3 petites cartes sur une ligne) ---- */
+#realisations{padding:5rem 0}
+#realisations .section_header{margin-bottom:2rem}
+#realisations .heading-style-h2{font-size:clamp(1.8rem,3vw,2.6rem)}
+.work_grid{grid-template-columns:repeat(3,1fr);gap:1.25rem}
+.work_item.is-wide{grid-column:auto}
+.work_image,.work_item.is-wide .work_image{aspect-ratio:4/3}
+.work_placeholder{font-size:clamp(1.1rem,1.8vw,1.6rem)}
+.work_meta{margin-top:.8rem}
+.work_meta h3{font-size:1.05rem}
+@media (max-width:991px){
+  #realisations{padding:3.5rem 0}
+  /* Mobile : une ligne à faire glisser au doigt */
+  .work_grid{display:flex;gap:1rem;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -1.25rem;padding:0 1.25rem .5rem;scrollbar-width:none}
+  .work_grid::-webkit-scrollbar{display:none}
+  .work_item{flex:none;width:68vw;scroll-snap-align:center}
+}
 </style>
 </head>
 <body>
