@@ -398,6 +398,10 @@ p{text-wrap:pretty}
   .contact_title{margin:1.2rem 0 1.6rem}
   .contact_note{margin-bottom:2rem}
 }
+/* ---- Titre du haut : lettres animées ---- */
+.section_hero .line_inner{perspective:600px}
+.section_hero .word{display:inline-block;white-space:nowrap}
+.section_hero .char{display:inline-block}
 </style>
 </head>
 <body>
@@ -626,16 +630,40 @@ p{text-wrap:pretty}
     });
   });
 
-  // Intro : compteur → rideau → titre ligne par ligne
-  gsap.set('.section_hero .line_inner', {yPercent:110});
+  // Titre du haut découpé en lettres (mots insécables, lecteurs d'écran : texte entier sur le h1)
+  var h1 = document.querySelector('.section_hero .heading-style-h1');
+  h1.setAttribute('aria-label', h1.textContent.replace(/\s+/g,' ').trim());
+  function split(node){
+    Array.prototype.slice.call(node.childNodes).forEach(function(n){
+      if(n.nodeType === 3){
+        var frag = document.createDocumentFragment();
+        n.textContent.split(/(\s+)/).forEach(function(w){
+          if(!w) return;
+          if(/^\s+$/.test(w)){ frag.appendChild(document.createTextNode(' ')); return; }
+          var word = document.createElement('span'); word.className = 'word'; word.setAttribute('aria-hidden','true');
+          w.split('').forEach(function(ch){ var c = document.createElement('span'); c.className = 'char'; c.textContent = ch; word.appendChild(c); });
+          frag.appendChild(word);
+        });
+        n.replaceWith(frag);
+      } else if(n.nodeType === 1){ split(n); }
+    });
+  }
+  h1.querySelectorAll('.line_inner').forEach(split);
+  var chars = h1.querySelectorAll('.char'), accent = h1.querySelectorAll('em .char');
+
+  // Intro : compteur → rideau → lettres qui basculent en place → reflet sur « vendent. »
+  gsap.set(chars, {yPercent:115, rotateX:-85, opacity:0, filter:'blur(8px)', transformOrigin:'50% 100%', willChange:'transform,opacity,filter'});
+  gsap.set(accent, {textShadow:'0 0 0px rgba(210,199,255,0)'});
   gsap.set('.hero_fade', {opacity:0, y:20});
   var o = {v:0};
   gsap.timeline()
     .to(o, {v:100, duration:1.3, ease:'power2.inOut', onUpdate:function(){ count.textContent = Math.round(o.v); }})
     .to(pre, {yPercent:-100, duration:.9, ease:'power4.inOut'})
-    .to('.section_hero .line_inner', {yPercent:0, duration:1.1, ease:'power4.out', stagger:.09}, '-=.35')
+    .to(chars, {yPercent:0, rotateX:0, opacity:1, filter:'blur(0px)', duration:1.2, ease:'expo.out', stagger:.035}, '-=.35')
+    .to(accent, {color:'#ffffff', textShadow:'0 0 28px rgba(210,199,255,.55)', duration:.25, ease:'power2.out', stagger:.05, yoyo:true, repeat:1}, '-=.55')
     .to('.hero_fade', {opacity:1, y:0, duration:.8, ease:'power3.out', stagger:.08}, '-=.75')
-    .add(function(){ pre.remove(); if(lenis) lenis.start(); });
+    .add(function(){ pre.remove(); if(lenis) lenis.start(); })
+    .add(function(){ gsap.set(chars, {clearProps:'filter,willChange'}); gsap.set(accent, {clearProps:'textShadow'}); }, '+=.6');
 
   // Haut de page : la page se fige pendant la traversée du tunnel, le titre s'efface
   if(document.getElementById('seq')){
