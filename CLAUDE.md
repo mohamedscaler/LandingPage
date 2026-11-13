@@ -21,7 +21,7 @@ One-page pour démarcher des clients (artisans, indépendants, PME). Objectif un
    + CTA flottant en bas (`#floatCta`) : apparaît après le tunnel, masqué sur Contact
 2. Hero : tunnel 3D piloté par le scroll (canvas `#seq`, section figée 130 %), titre « Des sites qui vendent. »
 3. Services (`#services`) : 4 cartes, inclinaison 3D au survol (`.t-tilt`, transitions.dev)
-4. Méthode (`#methode`) : 4 tuiles
+4. Les étapes (`#methode`) : 4 tuiles
 5. À propos (`#apropos`) : « by Miro », logo + texte + 3 faits (Paris, WhatsApp, maquette avant engagement). Pas de photo ni de chiffres inventés
 6. Grand texte défilant, puis Contact (`#contact`)
 
@@ -31,6 +31,12 @@ One-page pour démarcher des clients (artisans, indépendants, PME). Objectif un
 - Scripts dans l'ordre : tunnel (suite d'images) → interface (GSAP, Lenis, curseur) → tilt des cartes → scène Three.js (objet chrome, `#webgl`)
 - Sans GSAP ou en mouvement réduit, la page s'affiche sans animations
 - Sur ordi le tunnel charge `frames-hd/`, sur mobile `frames/`
+
+## Ton des textes
+
+- Cible : épavistes, nail artists, artisans, gens qui ne connaissent rien à l'informatique
+- Mots simples, tutoiement. Bannis : landing page, site vitrine, Shopify/Webflow/Framer, refonte, coder, développer
+- Ne rien affirmer sans l'accord de Miro (gratuité de la maquette, délais, prix, zone d'intervention)
 
 ## Style
 
